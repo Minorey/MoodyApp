@@ -21,7 +21,7 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = Pink80
 )
 
-// holiwis
+// holiwis x2
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
