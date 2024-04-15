@@ -16,17 +16,26 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+
+    background = Black,
+    primary = GreenDark,
+    onPrimary = Green,
+    secondary = White,
+    onSecondary = WhiteSmoke,
+    surface = Black
+
 )
 
 // holiwis x2
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+
+    background = PanchoLight,
+    primary = GreenDark,
+    onPrimary = Green,
+    secondary = PanchoDark,
+    onSecondary = Pancho20,
+    surface = PanchoLight
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -43,7 +52,7 @@ private val LightColorScheme = lightColorScheme(
 fun MoodyAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
