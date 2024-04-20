@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoodyApp</string>
+    <string name="loginButton">Iniciar Sesión</string>
+    <string name="title_activity_login">Inicia sesión para continuar</string>
+    <string name="greetings">Hola</string>
+    <string name="user">Usuario</string>
+    <string name="pass">Contraseña</string>
+</resources>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MoodyApp</string>
+    <string name="loginButton">Login</string>
+    <string name="title_activity_login">You must be login to continue</string>
+    <string name="greetings">Hello</string>
+    <string name="user">Username</string>
+    <string name="pass">Password</string>
 </resources>
