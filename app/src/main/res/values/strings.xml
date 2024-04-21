@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">MoodyApp</string>
     <string name="loginButton">Login</string>
-    <string name="title_activity_login">You must be login to continue</string>
+    <string name="title_activity_login">LoginActivity</string>
     <string name="greetings">Hello</string>
     <string name="user">Username</string>
     <string name="pass">Password</string>
+    <string name="subtitleLogin">You must be login to continue</string>
+    <string name="forgotPass">Did you forget your password?</string>
+    <string name="noAccount">You do not have an account?</string>
+    <string name="registerHere">Sign up here</string>
+    <string name="SignInButtonLabel">Sign in</string>
 </resources>
