@@ -10,5 +10,6 @@
     <string name="forgotPass">¿Olvidaste tu contraseña?</string>
     <string name="noAccount">¿No tienes una cuenta?</string>
     <string name="registerHere">Regístrate aquí</string>
-    <string name="SignInButtonLabel">Ingresar</string>
+    <string name="SignInButtonLabel">Iniciar Sesión</string>
+    <string name="googleSignin">Inicia con Google</string>
 </resources>

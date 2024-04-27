@@ -10,4 +10,5 @@
     <string name="noAccount">You do not have an account?</string>
     <string name="registerHere">Sign up here</string>
     <string name="SignInButtonLabel">Sign in</string>
+    <string name="googleSignin">Sign in with Google</string>
 </resources>

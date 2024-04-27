@@ -3,5 +3,4 @@
 
     <style name="Theme.MoodyApp" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="App.Starting.Theme" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
