@@ -1,5 +1,7 @@
 package com.example.moodyapp.presentation.common
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -18,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,6 +41,7 @@ fun NormalTextField(
 ) {
     OutlinedTextField(
         value = value,
+        singleLine = true,
         onValueChange =onValueChange,
         textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Left,
@@ -69,6 +73,9 @@ fun NormalTextField(
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary,
         ),
         shape = RoundedCornerShape(25.dp),
+        modifier = Modifier
+            .width(OutlinedTextFieldDefaults.MinWidth)
+            .fillMaxWidth(OutlinedTextFieldDefaults.MinWidth.value/10)
     )
 }
 
@@ -85,6 +92,7 @@ fun PasswordTextField(
 
     OutlinedTextField(
         value = value,
+        singleLine = true,
         onValueChange = onValueChange,
         textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Left,
@@ -134,5 +142,8 @@ fun PasswordTextField(
             unfocusedTrailingIconColor = MaterialTheme.colorScheme.primary,
         ),
         shape = RoundedCornerShape(25.dp),
+        modifier = Modifier
+            .width(OutlinedTextFieldDefaults.MinWidth)
+            .fillMaxWidth(OutlinedTextFieldDefaults.MinWidth.value/10)
     )
 }

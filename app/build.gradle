@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-parcelize'
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -110,5 +111,15 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:2.5.2"
 
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    //Analitycs
+    implementation("com.google.firebase:firebase-analytics")
+    //Authentication
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:8.0.2'
 
 }

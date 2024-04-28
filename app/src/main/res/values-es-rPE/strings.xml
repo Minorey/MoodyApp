@@ -12,4 +12,8 @@
     <string name="registerHere">Regístrate aquí</string>
     <string name="SignInButtonLabel">Iniciar Sesión</string>
     <string name="googleSignin">Inicia con Google</string>
+    <string name="TitleAlertComplete">Error</string>
+    <string name="ContentAlertComplete">Todos los campos deben estar completos para continuar</string>
+    <string name="ConfirmMsg">Confirmar</string>
+    <string name="NotLoginAlertContent">El usuario o la contraseña son incorrectos</string>
 </resources>

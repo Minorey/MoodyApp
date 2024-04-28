@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +37,9 @@ import com.example.moodyapp.presentation.common.LinkButton
 import com.example.moodyapp.presentation.common.LoginButton
 import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
+import com.example.moodyapp.presentation.common.SimpleAlertDialog
 import com.example.moodyapp.ui.theme.MoodyAppTheme
+import com.google.firebase.auth.FirebaseAuth
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +59,20 @@ class Login : ComponentActivity() {
 
 @Composable
 fun LoginScreen() {
+
+    var user by remember {
+        mutableStateOf("")
+    }
+    var pass by remember {
+        mutableStateOf("")
+    }
+    var shown by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var shownlogin by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,7 +91,7 @@ fun LoginScreen() {
                 )
                 Text(
                     text = stringResource(R.string.subtitleLogin),
-                    style =MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+                    style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
                     fontSize = 20.sp,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -81,16 +99,10 @@ fun LoginScreen() {
         }
         Row {
             Column {
-                var user by remember {
-                    mutableStateOf("")
-                }
-                var pass by remember {
-                    mutableStateOf("")
-                }
 
                 NormalTextField(
                     value = user,
-                    onValueChange = {user=it},
+                    onValueChange = { user = it },
                     leadingIcon = Icons.Filled.Person,
                     descriptionIcon = "User",
                     label = stringResource(R.string.user)
@@ -98,7 +110,7 @@ fun LoginScreen() {
 
                 PasswordTextField(
                     value = pass,
-                    onValueChange = {pass=it},
+                    onValueChange = { pass = it },
                     leadingIcon = Icons.Filled.Lock,
                     descriptionIcon = "Password",
                     label = stringResource(R.string.pass)
@@ -112,9 +124,20 @@ fun LoginScreen() {
                 val context = LocalContext.current
                 LoginButton(
                     text = stringResource(R.string.SignInButtonLabel),
-                    onClick = { context.startActivity(Intent(context, MainActivity::class.java)) })
+                    onClick = {
+                        if (user.isNotEmpty() && pass.isNotEmpty()) {
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(user, pass)
+                                .addOnSuccessListener {
+                                    context.startActivity(Intent(context, MainActivity::class.java))
+                                }.addOnFailureListener {
+                                    shownlogin= true
+                                }
+                        } else {
+                            shown = true
+                        }
+                    })
 
-                //GoogleButtom
+                //GoogleButton
                 GoogleButton(text = stringResource(id = R.string.googleSignin))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -133,6 +156,40 @@ fun LoginScreen() {
             }
         }
     }
+    MyNoContentDialog(shown = shown, { shown = false }, { shown = false })
+    MyNotLoginDialog(shown = shownlogin, onDismissRequest = { shownlogin=false },{ shownlogin =false })
+}
+
+@Composable
+fun MyNoContentDialog(
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    onConfirmButton: () -> Unit,
+) {
+    SimpleAlertDialog(
+        shown = shown,
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = { onConfirmButton() },
+        title = stringResource(R.string.TitleAlertComplete),
+        description = stringResource(R.string.ContentAlertComplete),
+        icondialog = Icons.Filled.Error
+    )
+}
+
+@Composable
+fun MyNotLoginDialog(
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    onConfirmButton: () -> Unit,
+) {
+    SimpleAlertDialog(
+        shown = shown,
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = { onConfirmButton() },
+        title = stringResource(R.string.TitleAlertComplete),
+        description = stringResource(R.string.NotLoginAlertContent),
+        icondialog = Icons.Filled.Error
+    )
 }
 
 @Preview(showBackground = true)

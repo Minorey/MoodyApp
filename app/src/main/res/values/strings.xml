@@ -11,4 +11,8 @@
     <string name="registerHere">Sign up here</string>
     <string name="SignInButtonLabel">Sign in</string>
     <string name="googleSignin">Sign in with Google</string>
+    <string name="TitleAlertComplete">Error</string>
+    <string name="ContentAlertComplete">All fields must be complete to continue</string>
+    <string name="ConfirmMsg">Confirm</string>
+    <string name="NotLoginAlertContent">The username or password is incorrect</string>
 </resources>
