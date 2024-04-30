@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoodyApp</string>
+    <string name="loginButton">Iniciar Sesión</string>
+    <string name="title_activity_login">Iniciar Sesión</string>
+    <string name="greetings">Hola</string>
+    <string name="user">Usuario</string>
+    <string name="pass">Contraseña</string>
+    <string name="subtitleLogin">Inicia sesión para continuar</string>
+    <string name="forgotPass">¿Olvidaste tu contraseña?</string>
+    <string name="noAccount">¿No tienes una cuenta?</string>
+    <string name="registerHere">Regístrate aquí</string>
+    <string name="SignInButtonLabel">Iniciar Sesión</string>
+    <string name="googleSignin">Inicia con Google</string>
+    <string name="TitleAlertComplete">Error</string>
+    <string name="ContentAlertComplete">Todos los campos deben estar completos para continuar</string>
+    <string name="ConfirmMsg">Confirmar</string>
+    <string name="NotLoginAlertContent">El usuario o la contraseña son incorrectos</string>
+</resources>
