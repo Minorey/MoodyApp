@@ -45,11 +45,5 @@ val Typography = Typography(
         fontFamily = Quicksand,
         fontWeight = FontWeight.Normal,
         lineHeight = 19.sp
-    ),
-    labelMedium = TextStyle(
-        fontSize = 18.sp,
-        fontFamily = Quicksand,
-        fontWeight = FontWeight.Normal,
-        lineHeight = 19.sp
-    ),
+    )
 )
