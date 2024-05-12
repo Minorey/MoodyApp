@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.moodyapp.ui.theme.GreenSmoke
 import com.example.moodyapp.ui.theme.WhiteSmoke
 
 @Composable
@@ -43,7 +44,7 @@ fun MoodyTextButton(
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = WhiteSmoke
+            color = GreenSmoke
         )
     }
 }

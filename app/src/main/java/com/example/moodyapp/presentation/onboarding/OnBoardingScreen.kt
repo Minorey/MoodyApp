@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -18,9 +19,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.moodyapp.presentation.Dimens.MediumPadding2
+import com.example.moodyapp.presentation.Dimens.PageIndicatorWidth
 import com.example.moodyapp.presentation.common.MoodyButton
 import com.example.moodyapp.presentation.common.MoodyTextButton
 import com.example.moodyapp.presentation.onboarding.components.OnBoardingPage
+import com.example.moodyapp.presentation.onboarding.components.PagerIndicator
 import kotlinx.coroutines.launch
 
 
@@ -58,11 +61,11 @@ fun OnBoardingScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-           /* PageIndicator(
+            PagerIndicator(
                 modifier = Modifier.width(PageIndicatorWidth),
-                pageSize = pages.size,
+                pagesSize = pages.size,
                 selectedPage = pagerState.currentPage
-            )*/
+            )
 
 
             Row(verticalAlignment = Alignment.CenterVertically) {
