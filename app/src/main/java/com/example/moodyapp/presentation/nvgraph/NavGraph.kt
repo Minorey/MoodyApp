@@ -1,7 +1,9 @@
 package com.example.moodyapp.presentation.nvgraph
 
+import android.util.Log
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.NavHost
@@ -17,7 +19,7 @@ fun NavGraph(
 ){
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination){
+    NavHost(navController = navController, startDestination = startDestination){
         navigation(
             route = Route.AppStartNavigation.route,
             startDestination = Route.OnBoardingScreen.route
@@ -37,7 +39,8 @@ fun NavGraph(
             startDestination = Route.MoodyNavigatorScreen.route,
         ){
             composable(route = Route.MoodyNavigatorScreen.route){
-                Text(text = "MOODY Navigator Screen")
+                Text(text = "MOODY Navigator Screedfadadan", color = Color.Black)
+                Log.e("hola mrd","si")
             }
         }
     }
