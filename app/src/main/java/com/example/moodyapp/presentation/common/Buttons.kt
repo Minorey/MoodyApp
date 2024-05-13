@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.moodyapp.R
 import com.example.moodyapp.ui.theme.WhiteSmoke
 
 @Composable
@@ -98,7 +99,7 @@ fun GoogleButton(
             contentColor = Color.Black,
         )
     ) {
-       Image(painter = painterResource(id = com.google.android.gms.base.R.drawable.googleg_standard_color_18) , contentDescription = "GoogleLogo")
+       Image(painter = painterResource(R.drawable.ic_logo_google) , contentDescription = "GoogleLogo")
         Text(
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
             text = text,

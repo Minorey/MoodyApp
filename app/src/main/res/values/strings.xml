@@ -2,7 +2,6 @@
     <string name="app_name">MoodyApp</string>
     <string name="ConfirmMsg">Confirm</string>
     <string name="greetings">Hello</string>
-    <string name="greetings">Hello</string>
     <string name="subtitleLogin">Sign in to continue</string>
     <string name="user">Username</string>
     <string name="pass">Password</string>
