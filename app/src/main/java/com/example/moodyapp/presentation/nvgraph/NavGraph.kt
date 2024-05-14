@@ -40,7 +40,7 @@ fun NavGraph(
         ){
             composable(route = Route.MoodyNavigatorScreen.route){
                 Text(text = "MOODY Navigator Screedfadadan", color = Color.Black)
-                Log.e("hola mrd","si")
+                Log.e("hola","si")
             }
         }
     }

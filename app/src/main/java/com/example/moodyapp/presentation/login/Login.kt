@@ -1,5 +1,5 @@
 package com.example.moodyapp.presentation.login
-
+/*
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -116,7 +116,7 @@ fun LoginScreen() {
                     label = stringResource(R.string.pass)
                 )
 
-                LinkButton(text = stringResource(R.string.forgotPass), onClick = { /*TODO*/ })
+                LinkButton(text = stringResource(R.string.forgotPass), onClick =
             }
         }
         Row {
@@ -151,7 +151,7 @@ fun LoginScreen() {
                         color = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier.padding(0.dp, 15.dp),
                     )
-                    LinkButton(text = stringResource(R.string.registerHere), onClick = { /*TODO*/ })
+                    LinkButton(text = stringResource(R.string.registerHere), onClick = {
                 }
             }
         }
@@ -198,4 +198,4 @@ fun LoginScreenPreview() {
     MoodyAppTheme {
         LoginScreen()
     }
-}
+}*/
