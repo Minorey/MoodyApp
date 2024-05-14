@@ -1,7 +1,6 @@
 package com.example.moodyapp.presentation.login
 
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,10 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moodyapp.MainActivity
+import androidx.navigation.NavHostController
 import com.example.moodyapp.R
 import com.example.moodyapp.presentation.common.GoogleButton
 import com.example.moodyapp.presentation.common.LinkButton
@@ -40,8 +38,8 @@ import com.example.moodyapp.presentation.common.LoginButton
 import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
 import com.example.moodyapp.presentation.common.SimpleAlertDialog
-import com.example.moodyapp.presentation.example.Example
 import com.example.moodyapp.ui.theme.MoodyAppTheme
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class Login : ComponentActivity() {
@@ -53,7 +51,6 @@ class Login : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface
                 ) {
-                    LoginScreen()
                 }
             }
         }
@@ -61,7 +58,7 @@ class Login : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
 
     var user by remember {
         mutableStateOf("")
@@ -130,9 +127,11 @@ fun LoginScreen() {
                     text = stringResource(R.string.SignInButtonLabel),
                     onClick = {
                         if (user.isNotEmpty() && pass.isNotEmpty()) {
+                            FirebaseApp.initializeApp(context)
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(user, pass)
                                 .addOnSuccessListener {
-                                    Example()
+                                    navController.navigate("exampleScreen")
+
                                 }.addOnFailureListener {
                                     shownlogin= true
                                 }

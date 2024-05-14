@@ -13,4 +13,5 @@
     <string name="TitleAlertComplete">Error</string>
     <string name="ContentAlertComplete">The fields are not complete</string>
     <string name="NotLoginAlertContent">The username or password is not correct</string>
+    <string name="title_activity_examples">Examples</string>
 </resources>

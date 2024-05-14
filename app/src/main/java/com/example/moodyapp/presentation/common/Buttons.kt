@@ -116,7 +116,7 @@ fun GoogleButton(
 fun LinkButton(
     text: String,
     onClick: () -> Unit,
-    contentColorValue: Color = MaterialTheme.colorScheme.background,
+    contentColorValue: Color = MaterialTheme.colorScheme.secondary,
 ) {
     TextButton(
         onClick = onClick,
