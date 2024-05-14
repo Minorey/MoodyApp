@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MoodyApp</string>
+    <string name="ConfirmMsg">Confirm</string>
+    <string name="greetings">Hello</string>
+    <string name="subtitleLogin">Sign in to continue</string>
+    <string name="user">Username</string>
+    <string name="pass">Password</string>
+    <string name="forgotPass">Forgot password</string>
+    <string name="SignInButtonLabel">Sign In</string>
+    <string name="googleSignin">Google Sign In</string>
+    <string name="noAccount">You do not have an account?</string>
+    <string name="registerHere">Sign Up Here</string>
+    <string name="TitleAlertComplete">Error</string>
+    <string name="ContentAlertComplete">The fields are not complete</string>
+    <string name="NotLoginAlertContent">The username or password is not correct</string>
+    <string name="title_activity_examples">Examples</string>
 </resources>

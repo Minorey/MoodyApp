@@ -1,4 +1,5 @@
 package com.example.moodyapp.presentation.onboarding
 
-class OnBoardingEvent {
-}
+ sealed class OnBoardingEvent {
+    object SaveAppEntry:OnBoardingEvent()
+ }

@@ -1,5 +1,7 @@
 package com.example.moodyapp.presentation.onboarding
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -17,18 +20,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.moodyapp.presentation.Dimens.MediumPadding2
+import com.example.moodyapp.presentation.Dimens.PageIndicatorWidth
 import com.example.moodyapp.presentation.common.MoodyButton
 import com.example.moodyapp.presentation.common.MoodyTextButton
 import com.example.moodyapp.presentation.onboarding.components.OnBoardingPage
+import com.example.moodyapp.presentation.onboarding.components.PagerIndicator
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
-  //  event: (OnBoardingEvent) -> Unit
+    onEvent: (OnBoardingEvent) -> Unit
 ) {
+    val context = LocalContext.current
+    (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
@@ -58,11 +66,11 @@ fun OnBoardingScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-           /* PageIndicator(
+            PagerIndicator(
                 modifier = Modifier.width(PageIndicatorWidth),
-                pageSize = pages.size,
+                pagesSize = pages.size,
                 selectedPage = pagerState.currentPage
-            )*/
+            )
 
 
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -83,7 +91,7 @@ fun OnBoardingScreen(
                     onClick = {
                         scope.launch {
                             if (pagerState.currentPage == 2) {
-                               // event(OnBoardingEvent.SaveAppEntry)
+                               onEvent(OnBoardingEvent.SaveAppEntry)
 
                             } else {
                                 pagerState.animateScrollToPage(
