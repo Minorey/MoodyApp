@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.moodyapp.presentation.login.LoginScreen
 import com.example.moodyapp.presentation.onboarding.OnBoardingScreen
 import com.example.moodyapp.presentation.onboarding.OnBoardingViewModel
 
@@ -37,7 +38,7 @@ fun NavGraph(
             startDestination = Route.MoodyNavigatorScreen.route,
         ){
             composable(route = Route.MoodyNavigatorScreen.route){
-                Text(text = "MOODY Navigator Screen")
+                LoginScreen()
             }
         }
     }

@@ -23,8 +23,8 @@ import com.example.moodyapp.ui.theme.WhiteSmoke
 
 @Composable
 fun MoodyButton(
-text: String,
-onClick: () -> Unit
+    text: String,
+    onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
@@ -99,7 +99,11 @@ fun GoogleButton(
             contentColor = Color.Black,
         )
     ) {
-       Image(painter = painterResource(R.drawable.ic_logo_google) , contentDescription = "GoogleLogo")
+        Image(
+            painter = painterResource(R.drawable.ic_logo_google),
+            contentDescription = "GoogleLogo",
+            modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
+        )
         Text(
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
             text = text,
@@ -107,6 +111,7 @@ fun GoogleButton(
         )
     }
 }
+
 @Composable
 fun LinkButton(
     text: String,

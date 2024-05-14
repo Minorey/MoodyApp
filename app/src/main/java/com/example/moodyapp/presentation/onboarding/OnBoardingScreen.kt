@@ -1,5 +1,7 @@
 package com.example.moodyapp.presentation.onboarding
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.moodyapp.presentation.Dimens.MediumPadding2
 import com.example.moodyapp.presentation.Dimens.PageIndicatorWidth
 import com.example.moodyapp.presentation.common.MoodyButton
@@ -32,6 +35,8 @@ import kotlinx.coroutines.launch
 fun OnBoardingScreen(
     onEvent: (OnBoardingEvent) -> Unit
 ) {
+    val context = LocalContext.current
+    (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size

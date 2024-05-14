@@ -1,6 +1,8 @@
 package com.example.moodyapp.presentation.login
 
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +40,7 @@ import com.example.moodyapp.presentation.common.LoginButton
 import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
 import com.example.moodyapp.presentation.common.SimpleAlertDialog
+import com.example.moodyapp.presentation.example.Example
 import com.example.moodyapp.ui.theme.MoodyAppTheme
 import com.google.firebase.auth.FirebaseAuth
 
@@ -122,13 +125,14 @@ fun LoginScreen() {
         Row {
             Column {
                 val context = LocalContext.current
+                (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 LoginButton(
                     text = stringResource(R.string.SignInButtonLabel),
                     onClick = {
                         if (user.isNotEmpty() && pass.isNotEmpty()) {
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(user, pass)
                                 .addOnSuccessListener {
-                                    context.startActivity(Intent(context, MainActivity::class.java))
+                                    Example()
                                 }.addOnFailureListener {
                                     shownlogin= true
                                 }
@@ -190,12 +194,4 @@ fun MyNotLoginDialog(
         description = stringResource(R.string.NotLoginAlertContent),
         icondialog = Icons.Filled.Error
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    MoodyAppTheme {
-        LoginScreen()
-    }
 }
