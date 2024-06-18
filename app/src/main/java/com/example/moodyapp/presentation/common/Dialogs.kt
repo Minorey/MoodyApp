@@ -1,36 +1,48 @@
 package com.example.moodyapp.presentation.common
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.example.moodyapp.R
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Date
+import kotlin.time.Duration.Companion.days
 
 @Composable
 fun SimpleAlertDialog(
-    shown:Boolean,
-    onDismissRequest:()->Unit,
-    confirmButton:() ->Unit,
-    title:String,
-    description:String,
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    confirmButton: () -> Unit,
+    title: String,
+    description: String,
     icondialog: ImageVector,
-){
+) {
     if (shown) {
         AlertDialog(
-            onDismissRequest = {onDismissRequest()},
+            onDismissRequest = { onDismissRequest() },
             confirmButton = {
-                TextButton(onClick = {confirmButton()}) {
+                TextButton(onClick = { confirmButton() }) {
                     Text(text = stringResource(R.string.ConfirmMsg))
                 }
             },
             title = {
-                Text(text=title)
+                Text(text = title)
             },
             text = {
-                Text(text=description)
+                Text(text = description)
             },
             icon = {
                 Icon(imageVector = icondialog, contentDescription = "IconDialog")
@@ -38,4 +50,57 @@ fun SimpleAlertDialog(
 
         )
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyDatePickerDialog(
+    onDateSelected: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val datePickerState = rememberDatePickerState(
+        yearRange = (LocalDate.now().year - 100)..(LocalDate.now().year - 10),
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                return utcTimeMillis <= System.currentTimeMillis()
+            }
+        })
+
+    val selectedDate = datePickerState.selectedDateMillis?.let {
+        convertMillisToDate(it)
+    } ?: ""
+    DatePickerDialog(
+        onDismissRequest = { onDismiss() },
+        confirmButton = {
+            Button(onClick = {
+                onDateSelected(selectedDate)
+                onDismiss()
+            }
+
+            ) {
+                Text(text = "OK")
+            }
+        },
+        dismissButton = {
+            Button(onClick = {
+                onDismiss()
+            }) {
+                Text(text = "Cancel")
+            }
+        }
+    ) {
+        DatePicker(
+            state = datePickerState,
+            title={
+                Text(text = stringResource(id = R.string.birthdateTitle))
+            },
+        )
+    }
+}
+
+private fun convertMillisToDate(millis: Long): String {
+
+    val formatter = SimpleDateFormat("dd/MM/yyyy")
+    return formatter.format(Date(millis.plus(1.days.inWholeMilliseconds)))
 }

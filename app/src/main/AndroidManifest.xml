@@ -14,6 +14,11 @@
         android:theme="@style/App.Starting.Theme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.menu.ContainerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_container"
+            android:theme="@style/App.Starting.Theme" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

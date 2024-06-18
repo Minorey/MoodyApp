@@ -3,7 +3,7 @@
     <string name="ConfirmMsg">Confirm</string>
     <string name="greetings">Hello</string>
     <string name="subtitleLogin">Sign in to continue</string>
-    <string name="user">Username</string>
+    <string name="user">E-Mail</string>
     <string name="pass">Password</string>
     <string name="forgotPass">Forgot password</string>
     <string name="SignInButtonLabel">Sign In</string>
@@ -14,4 +14,17 @@
     <string name="ContentAlertComplete">The fields are not complete</string>
     <string name="NotLoginAlertContent">The username or password is not correct</string>
     <string name="title_activity_examples">Examples</string>
+    <string name="registerTitle">Register</string>
+    <string name="subtitleRegister">Use your e-mail for sign up</string>
+    <string name="username">Username</string>
+    <string name="registerRemember">Remember to enter a password of at least 8 characters, including a number and a special character</string>
+    <string name="continueButton">Continue</string>
+    <string name="errorRegContent">Please, complete the fields</string>
+    <string name="errorPasswordCorrect">Remember to enter a password of at least 8 characters, including a number and a special character</string>
+    <string name="datePickerLabel">select your date of birth</string>
+    <string name="birthdateTitle">Date of Birth</string>
+    <string name="title_activity_container">ContainerActivity</string>
+    <string name="calendarName">Calendar</string>
+    <string name="diaryName">Diary</string>
+    <string name="profileName">Profile</string>
 </resources>
