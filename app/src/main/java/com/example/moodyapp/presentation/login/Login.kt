@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.findNavController
 import com.example.moodyapp.R
 import com.example.moodyapp.presentation.common.GoogleButton
 import com.example.moodyapp.presentation.common.LinkButton
@@ -38,6 +39,8 @@ import com.example.moodyapp.presentation.common.LoginButton
 import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
 import com.example.moodyapp.presentation.common.SimpleAlertDialog
+import com.example.moodyapp.presentation.example.MyExampleScreen
+import com.example.moodyapp.presentation.register.ui.RegisterScreen
 import com.example.moodyapp.ui.theme.MoodyAppTheme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -47,7 +50,6 @@ class Login : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MoodyAppTheme {
-
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface
                 ) {
@@ -55,10 +57,21 @@ class Login : ComponentActivity() {
             }
         }
     }
+    public override fun onResume() {
+        super.onResume()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            findNavController(0).navigate("exampleScreen")
+        } else {
+            //nothing
+        }
+    }
+
 }
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
+
 
     var user by remember {
         mutableStateOf("")
@@ -130,7 +143,7 @@ fun LoginScreen(navController: NavHostController) {
                             FirebaseApp.initializeApp(context)
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(user, pass)
                                 .addOnSuccessListener {
-                                    navController.navigate("exampleScreen")
+                                    navController.navigate("menuScreen")
 
                                 }.addOnFailureListener {
                                     shownlogin= true
@@ -154,7 +167,7 @@ fun LoginScreen(navController: NavHostController) {
                         color = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier.padding(0.dp, 15.dp),
                     )
-                    LinkButton(text = stringResource(R.string.registerHere), onClick = { /*TODO*/ })
+                    LinkButton(text = stringResource(R.string.registerHere), onClick = {navController.navigate("registerScreen") })
                 }
             }
         }

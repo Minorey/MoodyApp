@@ -7,4 +7,13 @@
     <color name="input_background">#3A3B3C</color>
     <color name="placeholder">#DDDDDD</color>
     <color name="shimmer">#414243</color>
+
+    //colores ui light
+    <color name="GreenDark">#FF2B2E2A</color>
+    <color name="Green">#FFFFFFFF</color>
+
+    <color name="PachoDark">#FFE6E8E6</color>
+    <color name="PanchoLight">#FF899952</color>
+    <color name="Pancho20">#FFFEFAE0</color>
+
 </resources>

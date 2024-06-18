@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -56,14 +58,15 @@ dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.5.1'
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3-android:1.2.1'
     implementation 'androidx.compose.material:material-icons-extended-android:1.6.7'
     implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.1'
-    implementation platform('androidx.compose:compose-bom:2023.08.00')
+    //NO TOCAR
+    //implementation 'androidx.compose.material3:material3'
+    //implementation 'androidx.wear.compose:compose-material:1.3.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -77,13 +80,12 @@ dependencies {
     implementation "androidx.core:core-splashscreen:1.0.1"
 
     //Compose Navigation
-    def nav_version = "2.6.0"
-    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "androidx.navigation:navigation-compose:2.7.7"
 
     //Dagger Hilt
-    implementation "com.google.dagger:hilt-android:2.45"
-    kapt "com.google.dagger:hilt-compiler:2.45"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+    implementation "com.google.dagger:hilt-android:2.49"
+    kapt "com.google.dagger:hilt-compiler:2.49"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
 
 
     //Retrofit
@@ -103,15 +105,13 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta"
 
     //Paging 3
-    def paging_version = "3.1.1"
-    implementation "androidx.paging:paging-runtime:$paging_version"
-    implementation "androidx.paging:paging-compose:3.2.0-rc01"
+    implementation "androidx.paging:paging-runtime-ktx:3.3.0"
+    implementation "androidx.paging:paging-compose:3.3.0"
 
     //Room
-    def room_version = "2.5.2"
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:2.5.2"
+    implementation "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
+    implementation "androidx.room:room-ktx:2.6.1"
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
@@ -122,5 +122,9 @@ dependencies {
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:8.0.2'
 
-
+}
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        languageVersion = "1.9"
+    }
 }

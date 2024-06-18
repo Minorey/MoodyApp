@@ -4,7 +4,7 @@
     <string name="ConfirmMsg">Confirmar</string>
     <string name="greetings">Hola</string>
     <string name="subtitleLogin">Inicia sesión para continuar</string>
-    <string name="user">Usuario</string>
+    <string name="user">Correo</string>
     <string name="pass">Contraseña</string>
     <string name="forgotPass">Olvidé la contraseña</string>
     <string name="SignInButtonLabel">Iniciar Sesión</string>
@@ -14,4 +14,18 @@
     <string name="TitleAlertComplete">Error</string>
     <string name="ContentAlertComplete">Los campos no están completos</string>
     <string name="NotLoginAlertContent">El nombre de usuario o contraseña no son correctos</string>
+    <string name="title_activity_examples">Ejemplos</string>
+    <string name="registerTitle">Registro</string>
+    <string name="subtitleRegister">Usa tu correo para registrarte</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="registerRemember">Recuerda ingresar una contraseña de al menos 8 caracteres, entre ellos un número y un caracter especial</string>
+    <string name="continueButton">Continuar</string>
+    <string name="errorRegContent">Por favor de completar todos los campos</string>
+    <string name="errorPasswordCorrect">Recuerda ingresar una contraseña de al menos 8 caracteres, entre ellos un número y un caracter especial</string>
+    <string name="datePickerLabel">selecciona tu fecha de nacimiento</string>
+    <string name="birthdateTitle">Fecha de Nacimiento</string>
+    <string name="title_activity_container">ContainerActivity</string>
+    <string name="calendarName">Calendario</string>
+    <string name="diaryName">Diario</string>
+    <string name="profileName">Perfil</string>
 </resources>
