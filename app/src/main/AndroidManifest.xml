@@ -11,21 +11,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/App.Starting.Theme"
+        android:theme="@style/Theme.MoodyApp"
         tools:targetApi="31">
-        <activity
-            android:name=".presentation.menu.ContainerActivity"
-            android:exported="false"
-            android:label="@string/title_activity_container"
-            android:theme="@style/App.Starting.Theme" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/App.Starting.Theme">
+            android:theme="@style/Theme.MoodyApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

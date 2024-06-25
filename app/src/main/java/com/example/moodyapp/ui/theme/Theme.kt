@@ -22,11 +22,11 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Green,
     secondary = White,
     onSecondary = WhiteSmoke,
-    surface = Black
+    surface = GreenDark
 
 )
 
-// holiwis x2
+// holiwis x2 x3 Yeicot Was Here
 
 private val LightColorScheme = lightColorScheme(
 
@@ -55,15 +55,8 @@ fun MoodyAppTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
