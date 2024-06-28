@@ -1,6 +1,7 @@
 package com.example.moodyapp.presentation.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -9,6 +10,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -36,10 +38,14 @@ fun horizontalViewPager(navController: NavHostController, dataStore: DataStore<P
             0f//tamaño diferencial de la página principal
             pages//número de páginas
         }
-        HorizontalPager(state = statePager, pageSize = PageSize.Fill) { index ->
-            SinglePage(page = pagesList[index])
+        Row {
+            HorizontalPager(state = statePager, pageSize = PageSize.Fill) { index ->
+                SinglePage(page = pagesList[index])
+            }
         }
         Spacer(modifier = Modifier.size(16.dp))
-        PreviousNextButton(pagerState = statePager, pages, navController, dataStore)
+        Row{
+            PreviousNextButton(pagerState = statePager, pages, navController, dataStore)
+        }
     }
 }

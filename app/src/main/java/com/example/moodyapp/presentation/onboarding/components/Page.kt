@@ -5,25 +5,21 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.example.moodyapp.R
 
 data class Page(
-    val title: String,
     val description: String,
     @DrawableRes val image: Int,
 )
 
-val pagesList= listOf(
+val pagesList = listOf(
     Page(
-        title = "Page1",
-        description = LoremIpsum(100).toString(),
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc imperdiet congue sapien ut semper. Vestibulum rhoncus ac elit consequat efficitur. Nunc efficitur mauris eu enim interdum, sed dapibus metus sodales. In et mauris ut lacus maximus pharetra. Nunc vestibulum aliquam diam, sed lobortis tortor aliquet nec.",
         image = R.drawable.onboardinghome1,
     ),
     Page(
-        title = "Page2",
-        description = LoremIpsum(100).toString(),
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc imperdiet congue sapien ut semper. Vestibulum rhoncus ac elit consequat efficitur. Nunc efficitur mauris eu enim interdum, sed dapibus metus sodales. In et mauris ut lacus maximus pharetra. Nunc vestibulum aliquam diam, sed lobortis tortor aliquet nec.",
         image = R.drawable.onboardinghome1,
     ),
     Page(
-        title = "Page3",
-        description = LoremIpsum(100).toString(),
+        description ="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc imperdiet congue sapien ut semper. Vestibulum rhoncus ac elit consequat efficitur. Nunc efficitur mauris eu enim interdum, sed dapibus metus sodales. In et mauris ut lacus maximus pharetra. Nunc vestibulum aliquam diam, sed lobortis tortor aliquet nec.",
         image = R.drawable.onboardinghome1,
     ),
 )

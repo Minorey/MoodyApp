@@ -4,9 +4,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -39,10 +41,12 @@ fun PreviousNextButton(
     pageCount: Int,
     navController: NavHostController,
     dataStore: DataStore<Preferences>
-    ) {
+) {
     val scope = rememberCoroutineScope()
     Row(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(40.dp, 50.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom,
     ) {
@@ -51,39 +55,65 @@ fun PreviousNextButton(
                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
             }
         }) {
-            Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
+            Icon(
+                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.background
+            )
         }
 
-        Box(modifier = Modifier.width(12.dp)) {
-            repeat(pageCount) { iteration ->
-                val color: Color = if (pagerState.currentPage == iteration) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.secondary
+        Box(
+            modifier = Modifier
+                .width(50.dp)
+                .padding(0.dp, 20.dp)
+        ) {
+            Row {
+                repeat(pageCount) { iteration ->
+                    val color: Color = if (pagerState.currentPage == iteration) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.secondary
+                    }
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 4.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(8.dp)
+                        )
+                    }
                 }
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp)
-                        .clip(CircleShape)
-                        .background(color)
-                        .size(8.dp)
-                )
             }
         }
 
-        val preferences=LocalUserMangerImpl(dataStore)
+        val preferences = LocalUserMangerImpl(dataStore)
 
-        Button(onClick = {
-            scope.launch {
-                if (pagerState.currentPage < pageCount - 1) {
-                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                } else {
-                    navController.navigate(Route.LoginScreen.route)
-                    preferences.updatePreference(LocalUserMangerImpl.ONBOARDING_CHECKED_KEY, true)
+        Button(
+            onClick = {
+                scope.launch {
+                    if (pagerState.currentPage < pageCount - 1) {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    } else {
+                        navController.navigate(Route.LoginScreen.route)
+                        preferences.updatePreference(
+                            LocalUserMangerImpl.ONBOARDING_CHECKED_KEY,
+                            true
+                        )
+                    }
                 }
-            }
-        }) {
-            Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowForward, contentDescription = null)
+            },
+            shape = CircleShape,
+
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.background,
+            )
         }
     }
 
