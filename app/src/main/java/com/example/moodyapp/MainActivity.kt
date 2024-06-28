@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
@@ -29,6 +30,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val screenSplash= installSplashScreen()
+
+        screenSplash.setKeepOnScreenCondition{false}
 
         setContent {
             MoodyAppTheme(
