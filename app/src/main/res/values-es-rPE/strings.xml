@@ -28,4 +28,5 @@
     <string name="calendarName">Calendario</string>
     <string name="diaryName">Diario</string>
     <string name="profileName">Perfil</string>
+    <string name="yesAccount">¿Tienes ya un perfil?</string>
 </resources>

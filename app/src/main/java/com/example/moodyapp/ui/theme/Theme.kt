@@ -35,7 +35,7 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Green,
     secondary = PanchoDark,
     onSecondary = Pancho20,
-    surface = PanchoLight
+    surface = Black
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

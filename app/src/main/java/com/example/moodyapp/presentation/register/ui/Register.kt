@@ -7,11 +7,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Abc
 import androidx.compose.material.icons.filled.Error
@@ -36,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moodyapp.R
+import com.example.moodyapp.presentation.common.LinkButton
 import com.example.moodyapp.presentation.common.MoodyButton
 import com.example.moodyapp.presentation.common.MyDatePickerDialog
 import com.example.moodyapp.presentation.common.NormalTextField
@@ -89,7 +92,9 @@ fun RegisterScreen(navController: NavHostController) {
     }
     val database = Firebase.database.reference
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(
             space = 40.dp,
@@ -203,6 +208,22 @@ fun RegisterScreen(navController: NavHostController) {
                     }
                 }
             }
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Absolute.Center,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                style = MaterialTheme.typography.labelSmall,
+                text = stringResource(R.string.yesAccount),
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier.padding(0.dp, 15.dp),
+            )
+            LinkButton(
+                text = stringResource(R.string.SignInButtonLabel),
+                onClick = { navController.navigate("loginScreen") })
         }
         MyNoContentDialogReg(shown = shownReg, { shownReg = false }, { shownReg = false })
         MyNotPasswordCorrectDialog(shown = shownPass,

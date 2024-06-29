@@ -1,10 +1,13 @@
 package com.example.moodyapp.presentation.menu
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +36,10 @@ fun BottomNavigationBar() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.background,
+            ) {
                 //getting the list of bottom navigation items for our data class
                 Screens().bottomNavigationItems().forEachIndexed { index, navigationItem ->
 
@@ -41,12 +47,16 @@ fun BottomNavigationBar() {
                     NavigationBarItem(
                         selected = index == navigationSelectedItem,
                         label = {
-                            Text(text=navigationItem.name)
+                            Text(
+                                text = navigationItem.name,
+                                color = MaterialTheme.colorScheme.background
+                            )
                         },
                         icon = {
                             Icon(
                                 navigationItem.icon,
-                                contentDescription = navigationItem.name
+                                contentDescription = navigationItem.name,
+                                tint = MaterialTheme.colorScheme.background,
                             )
                         },
                         onClick = {
@@ -58,7 +68,17 @@ fun BottomNavigationBar() {
                                 launchSingleTop = true
                                 restoreState = true
                             }
-                        }
+                        },
+                        colors =NavigationBarItemDefaults.colors(
+                            //Color del item seleccionado
+                            indicatorColor = if(isSystemInDarkTheme()){
+                                //Si el tema es oscuro
+                                MaterialTheme.colorScheme.secondary
+                            } else {
+                                //Si el tema es claro
+                                MaterialTheme.colorScheme.surface
+                            }
+                        )
                     )
                 }
             }
