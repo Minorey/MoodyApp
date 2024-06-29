@@ -25,7 +25,7 @@
     <string name="datePickerLabel">selecciona tu fecha de nacimiento</string>
     <string name="birthdateTitle">Fecha de Nacimiento</string>
     <string name="title_activity_container">ContainerActivity</string>
-    <string name="calendarName">Calendario</string>
+    <string name="memoriesName">Mis Recuerdos</string>
     <string name="diaryName">Diario</string>
     <string name="profileName">Perfil</string>
     <string name="yesAccount">¿Tienes ya un perfil?</string>

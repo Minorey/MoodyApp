@@ -24,7 +24,7 @@
     <string name="datePickerLabel">select your date of birth</string>
     <string name="birthdateTitle">Date of Birth</string>
     <string name="title_activity_container">ContainerActivity</string>
-    <string name="calendarName">Calendar</string>
+    <string name="memoriesName">My Memories</string>
     <string name="diaryName">Diary</string>
     <string name="profileName">Profile</string>
     <string name="yesAccount">You have an account?</string>
