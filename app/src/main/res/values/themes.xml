@@ -10,7 +10,7 @@
     <style name="Theme.SplashMyMoody" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#D9E09F</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
-        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
         <item name="postSplashScreenTheme">@style/Theme.MoodyApp</item>
     </style>
     <!--<style name="App.Starting.Theme" parent="android:Theme.Material.Light.NoActionBar" />-->

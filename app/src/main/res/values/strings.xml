@@ -28,4 +28,9 @@
     <string name="diaryName">Diary</string>
     <string name="profileName">Profile</string>
     <string name="yesAccount">You have an account?</string>
+    <string name="myinfobtn">My Information</string>
+    <string name="mystatsbtn">My Stats</string>
+    <string name="techsupportbtn">Technical Support</string>
+    <string name="conditionsbtn">Conditions and Policies</string>
+    <string name="signoffbtn">Sign Off</string>
 </resources>

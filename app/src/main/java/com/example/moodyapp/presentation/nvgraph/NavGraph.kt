@@ -1,6 +1,7 @@
 package com.example.moodyapp.presentation.nvgraph
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.datastore.core.DataStore
@@ -10,9 +11,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.moodyapp.presentation.confscreen.MySettings
 import com.example.moodyapp.presentation.login.LoginScreen
 import com.example.moodyapp.presentation.menu.BottomNavigationBar
-import com.example.moodyapp.presentation.menu.Routes
 import com.example.moodyapp.presentation.menu.calendar.Calendar
 import com.example.moodyapp.presentation.menu.diary.Diary
 import com.example.moodyapp.presentation.menu.perfil.Profile
@@ -28,31 +29,39 @@ fun NavGraph(
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination) {
+
+        //el onboarding, No tocar pls
         composable(route = startDestination) {
             horizontalViewPager(
                 navController = navController,
                 dataStore = dataStore
             )
         }
+
+        //Login
         composable(route = Route.LoginScreen.route) {
             LoginScreen(navController)
         }
+        //Register
         composable(route = Route.RegisterScreen.route) {
             RegisterScreen(navController)
         }
 
         composable(route = Route.MenuScreen.route) {
-            BottomNavigationBar()
+            BackHandler(enabled = true) {
+                // do nothing
+            }
+            BottomNavigationBar(navController)
         }
 
-        composable(route = Routes.Diary.route) {
-            Diary()
-        }
-        composable(route = Routes.Calendar.route) {
-            Calendar()
-        }
-        composable(route = Routes.Profile.route) {
-            Profile()
+        //Navegación a las Configuraciones
+        navigation(
+            route = Route.NewScreenWithConf.route,
+            startDestination = Route.ConfScreen.route
+        ){
+            composable(Route.ConfScreen.route) {
+                MySettings()
+            }
         }
 
     }
