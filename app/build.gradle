@@ -64,7 +64,7 @@ dependencies {
     implementation 'androidx.compose.material3:material3-android:1.2.1'
     implementation 'androidx.compose.material:material-icons-extended-android:1.6.7'
     implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.1'
-    //NO TOCAR
+    //(Yeicot)NO TOCAR - que lo toque dice(mino)
     //implementation 'androidx.compose.material3:material3'
     //implementation 'androidx.wear.compose:compose-material:1.3.1'
     testImplementation 'junit:junit:4.13.2'
@@ -113,6 +113,13 @@ dependencies {
     kapt "androidx.room:room-compiler:2.6.1"
     implementation "androidx.room:room-ktx:2.6.1"
 
+    //kotlin OpenAi
+    //implementation("org.openai.kotlin:openai-kotlin:0.1.1")
+
+    //OkHttp3
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     //Analitycs
@@ -121,6 +128,20 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:8.0.2'
+
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+
+    // OpenAI
+    implementation 'com.aallam.openai:openai-client:3.3.0'
+
+    // Ktor
+    implementation 'io.ktor:ktor-client-android:2.3.2'
+    implementation 'io.ktor:ktor-client-okhttp:2.3.2'
+
+    // Async Image
+    implementation 'io.coil-kt:coil-compose:2.4.0'
 
 }
 tasks.withType(KotlinCompile).configureEach {
