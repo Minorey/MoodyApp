@@ -29,4 +29,9 @@
     <string name="diaryName">Diario</string>
     <string name="profileName">Perfil</string>
     <string name="yesAccount">¿Tienes ya un perfil?</string>
+    <string name="myinfobtn">Mi Información</string>
+    <string name="mystatsbtn">Mis Estadísticas</string>
+    <string name="techsupportbtn">Soporte Técnico</string>
+    <string name="conditionsbtn">Condiciones y Políticas</string>
+    <string name="signoffbtn">Cerrar Sesión</string>
 </resources>
