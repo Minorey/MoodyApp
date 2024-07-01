@@ -1,6 +1,5 @@
 package com.example.moodyapp
 
-import android.Manifest
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Build
@@ -11,7 +10,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.core.app.ActivityCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.preferencesDataStore
@@ -36,9 +34,6 @@ class MainActivity : ComponentActivity() {
         val screenSplash= installSplashScreen()
 
         screenSplash.setKeepOnScreenCondition{false}
-
-        // Se puede mejorar la implementación de solicitud de permisos
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 0)
 
         setContent {
             MoodyAppTheme(

@@ -26,7 +26,7 @@ private val DarkColorScheme = darkColorScheme(
 
 )
 
-// holiwis x2 x3 Yeicot Was Here  -.- nou
+// holiwis x2 x3 Yeicot Was Here
 
 private val LightColorScheme = lightColorScheme(
 
