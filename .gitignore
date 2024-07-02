@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-Env.kt
+/app/src/main/java/com/example/moodyapp/util/Env.kt
