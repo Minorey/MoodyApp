@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -60,22 +61,27 @@ fun Diary() {
         topBar = {
             TopAppBar(
                 title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth().padding(0.dp,20.dp,0.dp,0.dp),
+                    ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_logo),
                             contentDescription = "Icono",
                             modifier = Modifier.size(32.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "MOODY - WHISPER IMAGE + TEXT)",
+                        Text(
+                            text = "MOODY - WHISPER IMAGE + TEXT)",
                             fontFamily = FontFamily.Monospace,
                             fontWeight = FontWeight.Black,
                             fontSize = 16.sp,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.secondary
                         )
                     }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.secondary)
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         }
     ) { padding ->
@@ -110,9 +116,9 @@ fun Diary() {
                     team,
                     games,
                     elements,
-                    onTeamChanged = { team = it},
-                    onGamesChanged = { games = it},
-                    onElementsChange = { elements = it}
+                    onTeamChanged = { team = it },
+                    onGamesChanged = { games = it },
+                    onElementsChange = { elements = it }
                 )
 
                 // 2
@@ -126,6 +132,7 @@ fun Diary() {
     }
 
 }
+
 @Preview(showBackground = true)
 @Composable
 fun DiaryPreview() {

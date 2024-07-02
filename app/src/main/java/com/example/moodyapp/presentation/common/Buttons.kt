@@ -146,8 +146,9 @@ fun ProfileButton(
             .padding(0.dp, 10.dp)//Padding
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Icon(imageVector = icon, contentDescription = "iconMyProfile")
             Text(

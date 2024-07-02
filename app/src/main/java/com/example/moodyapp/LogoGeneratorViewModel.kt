@@ -119,7 +119,7 @@ class LogoGeneratorViewModel : ViewModel() {
         startLoading()
 
         try {
-            var prompt = "llama(animal), cute, colores enteros ,vector logo, ${games.trim()}, ${elements.trim()}, "
+            var prompt = "Dibujo lindo y tierno de una llama con las características, ${games.trim()}, ${elements.trim()}, "
 
             if (info.isNotEmpty()) {
                 prompt += " ${info.trim()}"

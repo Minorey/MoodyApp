@@ -15,23 +15,12 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
-import com.example.moodyapp.presentation.confscreen.MySettings
-import com.example.moodyapp.presentation.menu.calendar.Calendar
+import com.example.moodyapp.presentation.menu.mymemories.Calendar
 import com.example.moodyapp.presentation.menu.diary.Diary
 import com.example.moodyapp.presentation.menu.perfil.Profile
-import com.example.moodyapp.presentation.nvgraph.Route
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

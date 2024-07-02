@@ -41,6 +41,7 @@ import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
 import com.example.moodyapp.presentation.common.SimpleAlertDialog
 import com.example.moodyapp.presentation.example.MyExampleScreen
+import com.example.moodyapp.presentation.nvgraph.Route
 import com.example.moodyapp.presentation.register.ui.RegisterScreen
 import com.example.moodyapp.ui.theme.MoodyAppTheme
 import com.google.firebase.FirebaseApp
@@ -58,13 +59,12 @@ class Login : ComponentActivity() {
             }
         }
     }
+
     public override fun onResume() {
         super.onResume()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
-            findNavController(0).navigate("exampleScreen")
-        } else {
-            //nothing
+            findNavController(0).navigate(Route.MenuScreen.route)
         }
     }
 
@@ -73,108 +73,122 @@ class Login : ComponentActivity() {
 @Composable
 fun LoginScreen(navController: NavHostController) {
 
-
-    var user by remember {
-        mutableStateOf("")
-    }
-    var pass by remember {
-        mutableStateOf("")
-    }
-    var shown by rememberSaveable {
-        mutableStateOf(false)
-    }
-    var shownlogin by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    Column(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(
-            space = 40.dp,
-            alignment = Alignment.CenterVertically,
-        )
-    ) {
-        Row {
-            Column {
-                Text(
-                    text = stringResource(R.string.greetings),
-                    style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
-                    fontSize = 30.sp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    text = stringResource(R.string.subtitleLogin),
-                    style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            }
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    if (currentUser != null) {
+        navController.navigate(Route.MenuScreen.route)
+    } else {
+        var user by remember {
+            mutableStateOf("")
         }
-        Row {
-            Column {
-
-                NormalTextField(
-                    value = user,
-                    onValueChange = { user = it },
-                    leadingIcon = Icons.Filled.Person,
-                    descriptionIcon = "User",
-                    label = stringResource(R.string.user)
-                )
-
-                PasswordTextField(
-                    value = pass,
-                    onValueChange = { pass = it },
-                    leadingIcon = Icons.Filled.Lock,
-                    descriptionIcon = "Password",
-                    label = stringResource(R.string.pass)
-                )
-
-                LinkButton(text = stringResource(R.string.forgotPass), onClick = { /*TODO*/ })
-            }
+        var pass by remember {
+            mutableStateOf("")
         }
-        Row {
-            Column {
-                val context = LocalContext.current
-                (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                LoginButton(
-                    text = stringResource(R.string.SignInButtonLabel),
-                    onClick = {
-                        if (user.isNotEmpty() && pass.isNotEmpty()) {
-                            FirebaseApp.initializeApp(context)
-                            FirebaseAuth.getInstance().signInWithEmailAndPassword(user, pass)
-                                .addOnSuccessListener {
-                                    navController.navigate("menuScreen")
+        var shown by rememberSaveable {
+            mutableStateOf(false)
+        }
+        var shownlogin by rememberSaveable {
+            mutableStateOf(false)
+        }
 
-                                }.addOnFailureListener {
-                                    shownlogin= true
-                                }
-                        } else {
-                            shown = true
-                        }
-                    })
-
-                //GoogleButton
-                GoogleButton(text = stringResource(id = R.string.googleSignin))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Absolute.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 40.dp,
+                alignment = Alignment.CenterVertically,
+            )
+        ) {
+            Row {
+                Column {
                     Text(
-                        style = MaterialTheme.typography.labelSmall,
-                        text = stringResource(R.string.noAccount),
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.tertiary,
-                        modifier = Modifier.padding(0.dp, 15.dp),
+                        text = stringResource(R.string.greetings),
+                        style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
+                        fontSize = 30.sp,
+                        color = MaterialTheme.colorScheme.primary,
                     )
-                    LinkButton(text = stringResource(R.string.registerHere), onClick = {navController.navigate("registerScreen") })
+                    Text(
+                        text = stringResource(R.string.subtitleLogin),
+                        style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
+            }
+            Row {
+                Column {
+
+                    NormalTextField(
+                        value = user,
+                        onValueChange = { user = it },
+                        leadingIcon = Icons.Filled.Person,
+                        descriptionIcon = "User",
+                        label = stringResource(R.string.user)
+                    )
+
+                    PasswordTextField(
+                        value = pass,
+                        onValueChange = { pass = it },
+                        leadingIcon = Icons.Filled.Lock,
+                        descriptionIcon = "Password",
+                        label = stringResource(R.string.pass)
+                    )
+
+                    LinkButton(text = stringResource(R.string.forgotPass), onClick = { /*TODO*/ })
+                }
+            }
+            Row {
+                Column {
+                    val context = LocalContext.current
+                    (context as? Activity)?.requestedOrientation =
+                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                    LoginButton(
+                        text = stringResource(R.string.SignInButtonLabel),
+                        onClick = {
+                            if (user.isNotEmpty() && pass.isNotEmpty()) {
+                                FirebaseApp.initializeApp(context)
+                                FirebaseAuth.getInstance().signInWithEmailAndPassword(user, pass)
+                                    .addOnSuccessListener {
+                                        navController.navigate("menuScreen")
+
+                                    }.addOnFailureListener {
+                                        shownlogin = true
+                                    }
+                            } else {
+                                shown = true
+                            }
+                        })
+
+                    //GoogleButton
+                    GoogleButton(text = stringResource(id = R.string.googleSignin))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Absolute.Center,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            style = MaterialTheme.typography.labelSmall,
+                            text = stringResource(R.string.noAccount),
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.tertiary,
+                            modifier = Modifier.padding(0.dp, 15.dp),
+                        )
+                        LinkButton(
+                            text = stringResource(R.string.registerHere),
+                            onClick = { navController.navigate("registerScreen") })
+                    }
                 }
             }
         }
+        MyNoContentDialog(shown = shown, { shown = false }, { shown = false })
+        MyNotLoginDialog(
+            shown = shownlogin,
+            onDismissRequest = { shownlogin = false },
+            { shownlogin = false })
     }
-    MyNoContentDialog(shown = shown, { shown = false }, { shown = false })
-    MyNotLoginDialog(shown = shownlogin, onDismissRequest = { shownlogin=false },{ shownlogin =false })
+
+
 }
 
 @Composable

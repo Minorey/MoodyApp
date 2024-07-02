@@ -8,15 +8,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.moodyapp.presentation.confscreen.MySettings
 import com.example.moodyapp.presentation.login.LoginScreen
 import com.example.moodyapp.presentation.menu.BottomNavigationBar
-import com.example.moodyapp.presentation.menu.calendar.Calendar
-import com.example.moodyapp.presentation.menu.diary.Diary
-import com.example.moodyapp.presentation.menu.perfil.Profile
 import com.example.moodyapp.presentation.onboarding.horizontalViewPager
 import com.example.moodyapp.presentation.register.ui.RegisterScreen
 

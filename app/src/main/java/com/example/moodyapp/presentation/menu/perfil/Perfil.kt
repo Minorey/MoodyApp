@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import com.example.moodyapp.R
 import com.example.moodyapp.presentation.common.ProfileButton
 import com.example.moodyapp.presentation.nvgraph.Route
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun Profile(navigationController: NavController) {
@@ -136,6 +137,7 @@ fun Profile(navigationController: NavController) {
         ProfileButton(
             stringResource(id = R.string.signoffbtn),
             {
+                FirebaseAuth.getInstance().signOut()
                 navigationController.navigate(Route.AppStartNavigation.route)
             },
             Icons.AutoMirrored.Outlined.ExitToApp
