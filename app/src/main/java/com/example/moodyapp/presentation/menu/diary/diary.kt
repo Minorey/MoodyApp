@@ -1,25 +1,23 @@
 package com.example.moodyapp.presentation.menu.diary
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ScheduleSend
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.TagFaces
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,114 +25,227 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.moodyapp.LogoGeneratorViewModel
 import com.example.moodyapp.R
+import com.example.moodyapp.presentation.common.SimpleAlertDialog
+import com.example.moodyapp.presentation.menu.diary.components.ActionButton
+import com.example.moodyapp.presentation.menu.diary.components.CharacterContentTextField
+import com.example.moodyapp.presentation.menu.diary.components.CharacterTextField
+import com.example.moodyapp.presentation.menu.diary.components.EmotionalDialog
+import com.example.moodyapp.presentation.menu.diary.components.NoDiaryDialog
 import com.example.moodyapp.presentation.menu.diary.content.APIKeyRow
-import com.example.moodyapp.presentation.menu.diary.content.DataColumn
-import com.example.moodyapp.presentation.menu.diary.content.GeneratorColumn
-import com.example.moodyapp.presentation.menu.diary.content.InfoColumn
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("ResourceType")
 @Composable
 fun Diary() {
-    val context = LocalContext.current
-    val viewModel = LogoGeneratorViewModel()
-    val scrollState = rememberScrollState()
-
     var apiKey by remember { mutableStateOf("") }
-
-    var team by remember { mutableStateOf("") }
-    var games by remember { mutableStateOf("") }
-    var elements by remember { mutableStateOf("") }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth().padding(0.dp,20.dp,0.dp,0.dp),
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_logo),
-                            contentDescription = "Icono",
-                            modifier = Modifier.size(32.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "MOODY - WHISPER IMAGE + TEXT)",
-                            fontFamily = FontFamily.Monospace,
-                            fontWeight = FontWeight.Black,
-                            fontSize = 16.sp,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.background)
-            )
+    var maxCharcont by remember { mutableStateOf(400) }
+    var numCharcont by remember { mutableStateOf(0) }
+    var maxChartitle by remember { mutableStateOf(100) }
+    var numChartitle by remember { mutableStateOf(0) }
+    val viewmodel = LogoGeneratorViewModel()
+    var isScrolleable by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    // API Key
+    APIKeyRow(context, viewmodel, apiKey) {
+        apiKey = it
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState(), enabled = isScrolleable)
+            .padding(40.dp, 40.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        var shown by remember {
+            mutableStateOf(false)
         }
-    ) { padding ->
+        var shownDiary by remember {
+            mutableStateOf(false)
+        }
+        var shownEmotions by remember {
+            mutableStateOf(false)
+        }
+        var mydiarytexttitle by remember {
+            mutableStateOf("")
+        }
+        var mydiarytextcontent by remember {
+            mutableStateOf("")
+        }
+        var responseText by remember {
+            mutableStateOf("")
+        }
+        var imageURL by remember {
+            mutableStateOf("")
+        }
+        val context = LocalContext.current
+        //DAtabase
+        val auth = FirebaseAuth.getInstance()
+        val database = FirebaseDatabase.getInstance()
+        var username by remember {
+            mutableStateOf("")
+        }
+        val myRef = database.getReference("users").child(auth.currentUser?.uid.toString())
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    username = dataSnapshot.child("username").value.toString()
+                }
+            }
 
-        if (viewModel.loading) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.e("ERROR DATABASE", error.toString())
+            }
+        })
+
+
+        if (!viewmodel.apiError) {
+            CharacterTextField(
+                label = stringResource(id = R.string.titletext),
+                count = "$numChartitle/$maxChartitle",
+                text = mydiarytexttitle
             ) {
-                CircularProgressIndicator()
+                if (it.length <= maxChartitle) {
+                    mydiarytexttitle = it
+                    numChartitle = it.length
+                }
+            }
+            CharacterContentTextField(
+                label = stringResource(id = R.string.mydeardiary),
+                count = "$numCharcont/$maxCharcont",
+                text = mydiarytextcontent
+            ) {
+                if (it.length <= maxCharcont) {
+                    mydiarytextcontent = it
+                    numCharcont = it.length
+                }
             }
         }
 
-        Column(
-            modifier = Modifier
-                .verticalScroll(state = scrollState)
-                .alpha(if (viewModel.loading) 0.5f else 1f)
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(32.dp)
+        ActionButton(
+            text = stringResource(id = R.string.diarybtn),
+            icon = Icons.AutoMirrored.Filled.Send,
+            description = "my action button for diary"
         ) {
-
-            // API Key
-            APIKeyRow(context, viewModel, apiKey) {
-                apiKey = it
-            }
-
-            if (!viewModel.apiError) {
-
-                // 1
-                DataColumn(
-                    team,
-                    games,
-                    elements,
-                    onTeamChanged = { team = it },
-                    onGamesChanged = { games = it },
-                    onElementsChange = { elements = it }
-                )
-
-                // 2
-                InfoColumn(context, viewModel)
-
-
-                // 3
-                GeneratorColumn(context, viewModel, team, games, elements)
-            }
+            shownEmotions = true
         }
+        if (responseText.isNotEmpty()) {
+            HorizontalDivider(
+                modifier = Modifier.padding(0.dp, 30.dp),
+                thickness = 2.dp,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        } else {
+            val painter = painterResource(id = R.raw.image)
+            Image(
+                painter = painter,
+                contentDescription = "happy llama",
+                modifier = Modifier
+                    .size(180.dp)
+                    .padding(0.dp, 30.dp, 0.dp, 0.dp),
+
+                contentScale = ContentScale.Fit,
+
+                )
+        }
+        Text(text = responseText)
+        AsyncImage(
+            model = imageURL,
+            contentDescription = "Logo",
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        MyConfirmDialog(shown = shown, onDismissRequest = { shown = false }, onConfirmButton = {
+            if (mydiarytexttitle.isNotEmpty() && mydiarytextcontent.isNotEmpty()) {
+                viewmodel.processDiary(mydiarytexttitle, mydiarytextcontent, username, {
+                    responseText = viewmodel.response
+                }, {
+                    imageURL = it
+                })
+                shown = false
+                isScrolleable=true
+            } else {
+                shown = false
+                shownDiary = true
+            }
+        })
+        MyNoDiaryDialog(
+            shown = shownDiary,
+            onDismissRequest = { shownDiary = false },
+            onConfirmButton = {
+                shownDiary = false
+            }
+        )
+
+        MyEmotionalDialog(
+            shown = shownEmotions,
+            onDismissRequest = {
+                shownEmotions = false
+            },
+            onConfirmButton = {
+                shownEmotions=false
+                shown = true
+            }
+        )
+
     }
 
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DiaryPreview() {
-    Diary()
+private fun MyConfirmDialog(
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    onConfirmButton: () -> Unit,
+) {
+    SimpleAlertDialog(
+        shown = shown,
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = { onConfirmButton() },
+        title = stringResource(R.string.areYouSureDialogTitle),
+        description = stringResource(R.string.areYouSureDialogContent),
+        icondialog = Icons.AutoMirrored.Filled.ScheduleSend
+    )
+}
+
+@Composable
+private fun MyNoDiaryDialog(
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    onConfirmButton: () -> Unit,
+) {
+    NoDiaryDialog(
+        shown = shown,
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = { onConfirmButton() },
+        title = stringResource(R.string.noDiaryDialogTitle),
+        content = stringResource(R.string.noDiaryDialogContent),
+    )
+}
+
+@Composable
+private fun MyEmotionalDialog(
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    onConfirmButton: () -> Unit,
+) {
+    EmotionalDialog(
+        shown = shown,
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = { onConfirmButton() },
+    )
 }

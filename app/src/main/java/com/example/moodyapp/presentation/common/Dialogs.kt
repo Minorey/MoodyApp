@@ -47,6 +47,9 @@ fun SimpleAlertDialog(
                     Text(text = stringResource(R.string.ConfirmMsg))
                 }
             },
+            dismissButton = {TextButton(onClick = { onDismissRequest() }) {
+                Text(text = stringResource(R.string.DismissMsg))
+            }},
             title = {
                 Text(text = title)
             },

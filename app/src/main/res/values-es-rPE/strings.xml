@@ -34,4 +34,18 @@
     <string name="techsupportbtn">Soporte Técnico</string>
     <string name="conditionsbtn">Condiciones y Políticas</string>
     <string name="signoffbtn">Cerrar Sesión</string>
+    <string name="mydeardiary">Querido Diario ...</string>
+    <string name="titletext">Título</string>
+    <string name="diarybtn">Envíar</string>
+    <string name="DismissMsg">Cancelar</string>
+    <string name="areYouSureDialogTitle">¿Estás de acuerdo?</string>
+    <string name="areYouSureDialogContent">Una vez enviada tu página de diario no podrás editar ni escribir otra hasta el día siguiente.</string>
+    <string name="noDiaryDialogTitle">No te desanimes...</string>
+    <string name="noDiaryDialogContent">... y dime cómo te fue hoy</string>
+    <string name="emoAngry">Molesto</string>
+    <string name="emoSurprised">Sorprendido</string>
+    <string name="emoHappy">Feliz</string>
+    <string name="emoWorried">Preocupado</string>
+    <string name="emoSad">Triste</string>
+    <string name="iFeel">Hoy me siento...</string>
 </resources>

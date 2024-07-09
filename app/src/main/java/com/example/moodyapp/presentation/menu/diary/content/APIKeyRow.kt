@@ -22,7 +22,7 @@ fun APIKeyRow(
         }
 
         Row{
-            CharacterTextField(label = "Open AI API Key", text = currentApiKey, onValueChange = {
+            CharacterTextField(label = "Open AI API Key",count="", text = currentApiKey, onValueChange = {
 
                 viewModel.setCustomAPIKey(context, if (it.length==51) it else "")
                 onApiKeyChanged(it)

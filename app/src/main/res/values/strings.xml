@@ -33,4 +33,18 @@
     <string name="techsupportbtn">Technical Support</string>
     <string name="conditionsbtn">Conditions and Policies</string>
     <string name="signoffbtn">Sign Off</string>
+    <string name="mydeardiary">My Dear Diary ...</string>
+    <string name="titletext">Title</string>
+    <string name="diarybtn">Send</string>
+    <string name="DismissMsg">Dismiss</string>
+    <string name="areYouSureDialogTitle">Are you sure?</string>
+    <string name="areYouSureDialogContent">Once your journal page is submitted, you will not be able to edit it or write another one until the next day.</string>
+    <string name="noDiaryDialogTitle">Don\'t be shy...</string>
+    <string name="noDiaryDialogContent">... and tell me how was today?</string>
+    <string name="emoAngry">Angry</string>
+    <string name="emoSurprised">Surprised</string>
+    <string name="emoHappy">Happy</string>
+    <string name="emoWorried">Worried</string>
+    <string name="emoSad">Sad</string>
+    <string name="iFeel">Today I feel...</string>
 </resources>

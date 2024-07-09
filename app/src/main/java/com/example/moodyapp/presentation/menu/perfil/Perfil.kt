@@ -1,5 +1,6 @@
 package com.example.moodyapp.presentation.menu.perfil
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,6 +36,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,23 +55,53 @@ import com.example.moodyapp.R
 import com.example.moodyapp.presentation.common.ProfileButton
 import com.example.moodyapp.presentation.nvgraph.Route
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 @Composable
 fun Profile(navigationController: NavController) {
+
+    var username by remember {
+        mutableStateOf("")
+    }
+    var correo by remember {
+        mutableStateOf("")
+    }
+
+    //DAtabase
+    val auth = FirebaseAuth.getInstance()
+    val database = FirebaseDatabase.getInstance()
+    val myRef = database.getReference("users").child(auth.currentUser?.uid.toString())
+    myRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                username = dataSnapshot.child("username").value.toString()
+                correo = dataSnapshot.child("email").value.toString()
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            // Failed to read value
+            Log.e("ERROR DATABASE", error.toString())
+        }
+    })
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(0.dp, 20.dp, 0.dp, 0.dp)
+            .padding(40.dp,40.dp)
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
             modifier = Modifier
-                .padding(0.dp,20.dp, 0.dp,20.dp)//Margin
-                .border(0.dp,Color.Transparent)
+                .padding(0.dp, 20.dp, 0.dp, 20.dp)//Margin
+                .border(0.dp, Color.Transparent)
         ) {
-            Column {
+            Column{
                 Box(modifier = Modifier
                     .clickable {
                         /*TO-DO*/
@@ -92,14 +127,14 @@ fun Profile(navigationController: NavController) {
             ) {
                 Row {
                     Text(
-                        text = "My Example Name",
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = username,
+                        style = MaterialTheme.typography.displayMedium,
                         fontWeight = FontWeight.Bold,
                     )//Nombre de Usuario
                 }
-                Row {
-                    Text(text = "myexamplemail@gmail.com")//Correo
-                }
+//                Row {
+//                    Text(text = correo)//Correo
+//                }
 
             }
             Column(
