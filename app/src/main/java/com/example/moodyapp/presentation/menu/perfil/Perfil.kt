@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,22 +17,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.ContactEmergency
-import androidx.compose.material.icons.outlined.ExitToApp
-import androidx.compose.material.icons.outlined.LibraryBooks
-import androidx.compose.material.icons.outlined.PersonPin
-import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.SupervisedUserCircle
 import androidx.compose.material.icons.outlined.SupportAgent
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,11 +44,12 @@ import androidx.navigation.NavController
 import com.example.moodyapp.R
 import com.example.moodyapp.presentation.common.ProfileButton
 import com.example.moodyapp.presentation.nvgraph.Route
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun Profile(navigationController: NavController) {
@@ -71,9 +62,7 @@ fun Profile(navigationController: NavController) {
     }
 
     //DAtabase
-    val auth = FirebaseAuth.getInstance()
-    val database = FirebaseDatabase.getInstance()
-    val myRef = database.getReference("users").child(auth.currentUser?.uid.toString())
+    val myRef = Firebase.database.reference.child(Firebase.auth.currentUser?.uid.toString())
     myRef.addValueEventListener(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
@@ -91,7 +80,7 @@ fun Profile(navigationController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(40.dp,40.dp)
+            .padding(40.dp, 40.dp)
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -101,7 +90,7 @@ fun Profile(navigationController: NavController) {
                 .padding(0.dp, 20.dp, 0.dp, 20.dp)//Margin
                 .border(0.dp, Color.Transparent)
         ) {
-            Column{
+            Column {
                 Box(modifier = Modifier
                     .clickable {
                         /*TO-DO*/
@@ -141,7 +130,7 @@ fun Profile(navigationController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .padding(0.dp,20.dp, 0.dp,0.dp)
+                    .padding(0.dp, 20.dp, 0.dp, 0.dp)
             ) {//Botón de Configuraciones
                 IconButton(onClick = { navigationController.navigate(Route.NewScreenWithConf.route) }) {
                     Icon(
@@ -172,7 +161,7 @@ fun Profile(navigationController: NavController) {
         ProfileButton(
             stringResource(id = R.string.signoffbtn),
             {
-                FirebaseAuth.getInstance().signOut()
+                Firebase.auth.signOut()
                 navigationController.navigate(Route.AppStartNavigation.route)
             },
             Icons.AutoMirrored.Outlined.ExitToApp

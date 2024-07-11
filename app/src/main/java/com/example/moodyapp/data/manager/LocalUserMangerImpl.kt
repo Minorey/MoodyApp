@@ -1,4 +1,4 @@
-package com.example.moodyapp.data.manger
+package com.example.moodyapp.data.manager
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

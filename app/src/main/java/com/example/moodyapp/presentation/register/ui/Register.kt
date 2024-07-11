@@ -48,7 +48,6 @@ import com.example.moodyapp.presentation.common.SoloLecturaTextField
 import com.example.moodyapp.ui.theme.MoodyAppTheme
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.database.database
 
@@ -177,13 +176,13 @@ fun RegisterScreen(navController: NavHostController) {
                                 if (passReg.matches(Regex(".*[A-Z@!*_.? ].*"))) {
 
                                     FirebaseApp.initializeApp(context)
-                                    FirebaseAuth.getInstance()
+                                    Firebase.auth
                                         .createUserWithEmailAndPassword(userReg, passReg)
                                         .addOnSuccessListener {
 
                                             //Realtime database data write
                                             val primalUser = database.child("users")
-                                                .child(Firebase.auth.currentUser?.uid ?: "00000000")
+                                                .child(Firebase.auth.currentUser?.uid.toString())
                                             primalUser.child("username").setValue(username)
                                             primalUser.child("email").setValue(userReg)
                                             primalUser.child("birthdate").setValue(date)

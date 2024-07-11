@@ -21,7 +21,13 @@ import com.aallam.openai.client.LoggingConfig
 import com.aallam.openai.client.OpenAI
 import com.example.moodyapp.util.Conf
 import com.example.moodyapp.util.Env
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class LogoGeneratorViewModel : ViewModel() {
     private var openAI = OpenAI(token = Env.OPENAI_API_KEY, logging = LoggingConfig(LogLevel.All))
@@ -30,13 +36,9 @@ class LogoGeneratorViewModel : ViewModel() {
     var imageURI: String by mutableStateOf("")
 
     var loading: Boolean by mutableStateOf(false)
-    //var recording: Boolean by mutableStateOf(false)
 
     var error: Boolean by mutableStateOf(false)
     var apiError: Boolean by mutableStateOf(false)
-
-    //private var recorder: AudioRecorder? = null
-    //private var audioFile: File? = null
 
     init {
         apiError = Env.OPENAI_API_KEY.isEmpty()
@@ -65,6 +67,7 @@ class LogoGeneratorViewModel : ViewModel() {
     fun processDiary(
         title: String,
         content: String,
+        emotion: String,
         user: String,
         responseText: () -> Unit,
         imageURL: (String) -> Unit,
@@ -84,13 +87,13 @@ class LogoGeneratorViewModel : ViewModel() {
                                 ),
                                 ChatMessage(
                                     role = ChatRole.User,
-                                    content = "Sabiendo que el nombre de la persona es $user, brinda un consejo detallado de apoyo emocional de manera natural a un joven, basándote en el siguiente título y contenido:\nTítulo:$title\nContenido:$content, al final coloca el nombre de la persona que te mandé"
+                                    content = "Sabiendo que el nombre de la persona es $user y que está $emotion, brinda un consejo detallado de apoyo emocional de manera natural a un joven, basándote en el siguiente título y contenido:\nTítulo:$title\nContenido:$content, al final coloca el nombre de la persona que te mandé"
                                 )
                             )
                         )
                     )
                 response = completion.choices.first().message.content.toString()
-                createInfoSummary(response) {
+                createInfoSummary(title = title, content=content, emotion=emotion) {
                     imageURI = it
                     imageURL(it)
                 }
@@ -102,27 +105,14 @@ class LogoGeneratorViewModel : ViewModel() {
             }
         }
 
-//    // Audio
-//    fun recordAudio(context: Context) {
-//        if (recording) {
-//            recording = false
-//            recorder?.stop()
-//            loadInfo(audioFile)
-//        } else {
-//            if (recorder == null) {
-//                recorder = AudioRecorder(context)
-//            }
-//            File(context.cacheDir, Conf.AUDIO_FILE).also {
-//                recorder?.record(it)
-//                audioFile = it
-//                recording = true
-//            }
-//        }
-//    }
-
     // Resumen
     @OptIn(BetaOpenAI::class)
-    fun createInfoSummary(responseText: String, imageURL: (String) -> Unit) =
+    fun createInfoSummary(
+        title: String,
+        content: String,
+        emotion: String,
+        imageURL: (String) -> Unit
+    ) =
         viewModelScope.launch {
             startLoading()
 
@@ -135,12 +125,18 @@ class LogoGeneratorViewModel : ViewModel() {
                     ),
                     ChatMessage(
                         role = ChatRole.User,
-                        content = "Lista las palabras clave del siguiente texto: $responseText"
+                        content = "Lista las palabras clave del siguiente texto: $response"
                     )
                 )
             )
+
+            val info= chatCompletionRequest.messages.first().content.toString()
+
             generateLogo(
-                openAI.chatCompletion(chatCompletionRequest).choices.first().message.content.toString(),
+                title = title,
+                content = content,
+                emotion = emotion,
+                info= info,
             ) {
                 imageURI = it
                 imageURL(it)
@@ -152,7 +148,10 @@ class LogoGeneratorViewModel : ViewModel() {
     // Generación de img e edit en base image and mask
     @OptIn(BetaOpenAI::class)
     fun generateLogo(
-        info: String,
+        title: String,
+        content: String,
+        emotion: String,
+        info: String = "",
         imageURL: (String) -> Unit,
     ) = viewModelScope.launch {
 
@@ -174,38 +173,55 @@ class LogoGeneratorViewModel : ViewModel() {
             )
 
             imageURL(images.first().url)
+            guardarDatos(title, content, response, images.first().url, emotion)
+
 
         } catch (e: Exception) {
             println(e)
             error = true
         } finally {
-
             endLoading()
         }
+
     }
 
-//    // Transcripción
-//    @OptIn(BetaOpenAI::class)
-//    private fun loadInfo(file: File?) = viewModelScope.launch {
-//
-//        file?.source()?.let {
-//
-//            startLoading()
-//
-//            val transcriptionRequest = TranscriptionRequest(
-//                audio = FileSource(name = Conf.AUDIO_FILE, source = it),
-//                model = ModelId(Conf.WHISPER_MODEL)
-//            )
-//
-//            val transcription = openAI.transcription(transcriptionRequest)
-//
-//            info = transcription.text
-//
-//            endLoading()
-//        }
-//    }
+    fun guardarDatos(
+        title: String,
+        content: String,
+        response: String,
+        image: String,
+        emotion: String
+    ) {
+        val user = Firebase.auth.uid.toString()
+        val databaseReal = Firebase.database.reference.child("users").child(user)
+            .child("emotions")
+        val databaseFire =
+            Firebase.firestore.collection("users").document(user)
+                .collection("record").document(getDate1())//format dd-mm-yyyy
+        val page = hashMapOf(
+            "title" to title,
+            "content" to content,
+            "response" to response,
+            "image" to image,
+            "emotion" to emotion
+        )
 
-    // Loading
+        databaseFire.set(page)
+        databaseReal.child(getDate2()).child("emotion").setValue(emotion)
+
+    }
+
+    private fun getDate1(): String {
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val current = LocalDateTime.now().format(formatter).toString()
+        return current
+    }
+
+    private fun getDate2(): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+        val current = LocalDateTime.now().format(formatter).toString()
+        return current
+    }
 
     private fun startLoading() {
         loading = true

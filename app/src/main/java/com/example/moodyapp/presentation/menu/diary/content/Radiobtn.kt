@@ -32,7 +32,7 @@ data class ToggleableInfo(
 )
 
 @Composable
-fun RadioButtons() {
+fun RadioButtons(Emotion: (String) -> Unit) {
 
     val angryText = stringResource(id = R.string.emoAngry)
     val angryImage = painterResource(id = R.drawable.angry)
@@ -45,7 +45,7 @@ fun RadioButtons() {
     val sadText = stringResource(id = R.string.emoSad)
     val sadImage = painterResource(id = R.drawable.sad)
 
-    var myEmotion = remember { mutableStateOf(happyText) }
+    var myEmotion = remember { mutableStateOf("") }
 
     val radioButtons = remember {
         mutableStateListOf(
@@ -60,7 +60,7 @@ fun RadioButtons() {
                 painter = surpriseImage
             ),
             ToggleableInfo(
-                isChecked = true,
+                isChecked = false,
                 text = happyText,
                 painter = happyImage
             ),
@@ -123,6 +123,7 @@ fun RadioButtons() {
                                 )
                             }
                             myEmotion.value = info.text
+                            Emotion(myEmotion.value)
                         },
                         modifier = Modifier.padding(top = 15.dp)
                     )

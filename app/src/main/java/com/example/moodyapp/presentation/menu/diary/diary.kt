@@ -14,7 +14,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ScheduleSend
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.TagFaces
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -98,6 +97,9 @@ fun Diary() {
         var username by remember {
             mutableStateOf("")
         }
+        var emotion by remember {
+            mutableStateOf("")
+        }
         val myRef = database.getReference("users").child(auth.currentUser?.uid.toString())
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -169,25 +171,40 @@ fun Diary() {
             modifier = Modifier.fillMaxWidth(),
         )
 
-        MyConfirmDialog(shown = shown, onDismissRequest = { shown = false }, onConfirmButton = {
-            if (mydiarytexttitle.isNotEmpty() && mydiarytextcontent.isNotEmpty()) {
-                viewmodel.processDiary(mydiarytexttitle, mydiarytextcontent, username, {
-                    responseText = viewmodel.response
-                }, {
-                    imageURL = it
-                })
+        MyConfirmDialog(shown = shown, onDismissRequest = {
+            shown = false
+            emotion = ""
+        }, onConfirmButton = {
+            if (mydiarytexttitle.isNotEmpty() && mydiarytextcontent.isNotEmpty() && emotion.isNotEmpty()) {
+                viewmodel.processDiary(
+                    title = mydiarytexttitle,
+                    content = mydiarytextcontent,
+                    user = username,
+                    emotion = emotion,
+                    responseText = {
+                        responseText = viewmodel.response
+                    },
+                    imageURL = {
+                        imageURL = it
+                    })
                 shown = false
-                isScrolleable=true
+                isScrolleable = true
+                emotion = ""
             } else {
                 shown = false
                 shownDiary = true
+                emotion = ""
             }
         })
         MyNoDiaryDialog(
             shown = shownDiary,
-            onDismissRequest = { shownDiary = false },
+            onDismissRequest = {
+                shownDiary = false
+                emotion = ""
+            },
             onConfirmButton = {
                 shownDiary = false
+                emotion = ""
             }
         )
 
@@ -195,12 +212,19 @@ fun Diary() {
             shown = shownEmotions,
             onDismissRequest = {
                 shownEmotions = false
+                emotion = ""
             },
             onConfirmButton = {
-                shownEmotions=false
-                shown = true
+                if (emotion.isNotEmpty()) {
+                    shownEmotions = false
+                    shown = true
+                }
             }
-        )
+        ) {
+            if (it.isNotEmpty()) {
+                emotion = it
+            }
+        }
 
     }
 
@@ -242,10 +266,11 @@ private fun MyEmotionalDialog(
     shown: Boolean,
     onDismissRequest: () -> Unit,
     onConfirmButton: () -> Unit,
+    Emotion: (String) -> Unit
 ) {
     EmotionalDialog(
         shown = shown,
         onDismissRequest = { onDismissRequest() },
         confirmButton = { onConfirmButton() },
-    )
+    ) { Emotion(it) }
 }

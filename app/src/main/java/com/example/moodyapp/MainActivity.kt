@@ -15,7 +15,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.navigation.compose.rememberNavController
 import com.example.moodyapp.presentation.nvgraph.NavGraph
 import com.example.moodyapp.presentation.nvgraph.Route
 import com.example.moodyapp.ui.theme.MoodyAppTheme

@@ -6,18 +6,18 @@ import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.aallam.openai.api.BetaOpenAI
-import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
+import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
 import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.model.ModelId
-import kotlinx.coroutines.launch
 import com.aallam.openai.client.OpenAI
 import com.example.moodyapp.util.Conf
 import com.example.moodyapp.util.Env
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class TextGenViewModel @Inject constructor() : ViewModel() {

@@ -40,9 +40,7 @@ import com.example.moodyapp.presentation.common.LoginButton
 import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
 import com.example.moodyapp.presentation.common.SimpleAlertDialog
-import com.example.moodyapp.presentation.example.MyExampleScreen
 import com.example.moodyapp.presentation.nvgraph.Route
-import com.example.moodyapp.presentation.register.ui.RegisterScreen
 import com.example.moodyapp.ui.theme.MoodyAppTheme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth

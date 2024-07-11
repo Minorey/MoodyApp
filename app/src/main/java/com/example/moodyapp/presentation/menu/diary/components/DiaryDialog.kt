@@ -12,6 +12,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,12 +31,19 @@ fun EmotionalDialog(
     shown: Boolean,
     onDismissRequest: () -> Unit,
     confirmButton: () -> Unit,
+    Emotion: (String) -> Unit,
 ) {
+    var emotionDia: String by remember {
+        mutableStateOf("")
+    }
+
     if (shown) {
         AlertDialog(
             onDismissRequest = { onDismissRequest() },
             confirmButton = {
-                TextButton(onClick = { confirmButton() }) {
+                TextButton(onClick = {
+                    confirmButton()
+                }) {
                     Text(text = stringResource(R.string.ConfirmMsg))
                 }
             },
@@ -42,7 +53,11 @@ fun EmotionalDialog(
                 }
             },
             text = {
-                RadioButtons()
+                RadioButtons() {
+                    emotionDia = it
+                    Emotion(it)
+                }
+
             },
             containerColor = MaterialTheme.colorScheme.background,
             modifier = Modifier.height(300.dp)
@@ -73,7 +88,7 @@ fun NoDiaryDialog(
                 }
             },
             title = {
-                Text(text = title,modifier = Modifier.padding(start = 30.dp))
+                Text(text = title, modifier = Modifier.padding(start = 30.dp))
             },
             text = {
                 Column(
@@ -88,7 +103,9 @@ fun NoDiaryDialog(
                     Image(
                         painter = painterResource(id = R.raw.mask),
                         contentDescription = "Happy tall llama",
-                        modifier = Modifier.padding(top = 20.dp, start = 15.dp).size(80.dp)
+                        modifier = Modifier
+                            .padding(top = 20.dp, start = 15.dp)
+                            .size(80.dp)
                     )
                 }
             },

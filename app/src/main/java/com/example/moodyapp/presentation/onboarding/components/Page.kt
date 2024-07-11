@@ -1,7 +1,6 @@
 package com.example.moodyapp.presentation.onboarding.components
 
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.example.moodyapp.R
 
 data class Page(

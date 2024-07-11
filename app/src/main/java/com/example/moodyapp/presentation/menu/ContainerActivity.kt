@@ -18,8 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.moodyapp.presentation.menu.mymemories.Calendar
 import com.example.moodyapp.presentation.menu.diary.Diary
+import com.example.moodyapp.presentation.menu.mymemories.Calendar
 import com.example.moodyapp.presentation.menu.perfil.Profile
 import kotlinx.coroutines.launch
 

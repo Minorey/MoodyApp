@@ -10,13 +10,11 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavHostController
-import com.example.moodyapp.data.manger.LocalUserMangerImpl
-import com.example.moodyapp.dataStore
+import com.example.moodyapp.data.manager.LocalUserMangerImpl
 import com.example.moodyapp.presentation.nvgraph.Route
 import com.example.moodyapp.presentation.onboarding.components.PreviousNextButton
 import com.example.moodyapp.presentation.onboarding.components.SinglePage

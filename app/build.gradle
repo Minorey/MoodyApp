@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.moodyapp"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -128,13 +128,15 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
     //Analitycs
     implementation("com.google.firebase:firebase-analytics")
     // FirebaseUI for Firebase Auth
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+    implementation 'com.google.firebase:firebase-auth-ktx'
     // FirebaseUI for Firebase Realtime Database
-    implementation 'com.firebaseui:firebase-ui-database:8.0.2'
+    implementation 'com.google.firebase:firebase-database-ktx'
+    // Declare the dependency for the Cloud Firestore library
+    implementation("com.google.firebase:firebase-firestore")
 
 
     // Coroutines
