@@ -2,11 +2,6 @@ package com.example.moodyapp.presentation.register.ui
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.os.Build
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,10 +16,10 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,26 +40,11 @@ import com.example.moodyapp.presentation.common.NormalTextField
 import com.example.moodyapp.presentation.common.PasswordTextField
 import com.example.moodyapp.presentation.common.SimpleAlertDialog
 import com.example.moodyapp.presentation.common.SoloLecturaTextField
-import com.example.moodyapp.ui.theme.MoodyAppTheme
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.auth
 import com.google.firebase.database.database
 
-class Register : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MoodyAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface
-                ) {}
-            }
-        }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterScreen(navController: NavHostController) {
 
@@ -83,13 +63,24 @@ fun RegisterScreen(navController: NavHostController) {
     var shownPass by rememberSaveable {
         mutableStateOf(false)
     }
+    var shownUser by rememberSaveable {
+        mutableStateOf(false)
+    }
     var date by remember {
         mutableStateOf("dd-mm-yyyy")
     }
     var showDatePicker by remember {
         mutableStateOf(false)
     }
+    val maxCharuser by rememberSaveable { mutableIntStateOf(20) }
+    var numCharuser by rememberSaveable { mutableIntStateOf(0) }
     val database = Firebase.database.reference
+
+    val context = LocalContext.current
+
+    (context as? Activity)?.requestedOrientation =
+        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -121,8 +112,12 @@ fun RegisterScreen(navController: NavHostController) {
 
                 NormalTextField(
                     value = username,
-                    onValueChange = { username = it },
+                    onValueChange = { if (it.length <= maxCharuser) {
+                        username = it
+                        numCharuser = it.length
+                    } },
                     leadingIcon = Icons.Filled.Person,
+                    count = "$numCharuser/$maxCharuser",
                     descriptionIcon = "Username",
                     label = stringResource(R.string.username)
                 )
@@ -163,44 +158,47 @@ fun RegisterScreen(navController: NavHostController) {
         Row {
             Column {
                 val context = LocalContext.current
-                (context as? Activity)?.requestedOrientation =
-                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
                 MoodyButton(text = stringResource(id = R.string.continueButton)) {
                     if (userReg.isNotEmpty() && passReg.isNotEmpty() && username.isNotEmpty() && date.isNotEmpty() && !date.contains(
                             "dd-mm-yyyy"
                         )
                     ) {
-                        if (passReg.length >= 8) {
-                            if (passReg.matches(Regex(".*[0-9].*"))) {
-                                //Llamar LOGS de error
-                                if (passReg.matches(Regex(".*[A-Z@!*_.? ].*"))) {
+                        if(username.length >= 3){
+                            if (passReg.length >= 8) {
+                                if (passReg.matches(Regex(".*[0-9].*"))) {
+                                    //Llamar LOGS de error
+                                    if (passReg.matches(Regex(".*[A-Z@!*_.? ].*"))) {
 
-                                    FirebaseApp.initializeApp(context)
-                                    Firebase.auth
-                                        .createUserWithEmailAndPassword(userReg, passReg)
-                                        .addOnSuccessListener {
+                                        FirebaseApp.initializeApp(context)
+                                        Firebase.auth
+                                            .createUserWithEmailAndPassword(userReg, passReg)
+                                            .addOnSuccessListener {
 
-                                            //Realtime database data write
-                                            val primalUser = database.child("users")
-                                                .child(Firebase.auth.currentUser?.uid.toString())
-                                            primalUser.child("username").setValue(username)
-                                            primalUser.child("email").setValue(userReg)
-                                            primalUser.child("birthdate").setValue(date)
+                                                //Realtime database data write
+                                                val primalUser = database.child("users")
+                                                    .child(Firebase.auth.currentUser?.uid.toString())
+                                                primalUser.child("username").setValue(username)
+                                                primalUser.child("email").setValue(userReg)
+                                                primalUser.child("birthdate").setValue(date)
 
-                                            //Confirm actions
-                                            Thread.sleep(1_000)
-                                            navController.navigate("menuScreen")
+                                                //Confirm actions
+                                                Thread.sleep(1_000)
+                                                navController.navigate("menuScreen")
 
-                                        }
+                                            }
 
+                                    } else {
+                                        shownPass = true
+                                    }
                                 } else {
                                     shownPass = true
                                 }
                             } else {
                                 shownPass = true
                             }
-                        } else {
-                            shownPass = true
+                        }else{
+                            shownUser=true
                         }
                     } else {
                         shownReg = true
@@ -224,10 +222,16 @@ fun RegisterScreen(navController: NavHostController) {
                 text = stringResource(R.string.SignInButtonLabel),
                 onClick = { navController.navigate("loginScreen") })
         }
-        MyNoContentDialogReg(shown = shownReg, { shownReg = false }, { shownReg = false })
+        MyNoContentDialogReg(shown = shownReg, { shownReg = false },
+            { shownReg = false })
+
         MyNotPasswordCorrectDialog(shown = shownPass,
             onDismissRequest = { shownPass = false },
             { shownPass = false })
+
+        MyNotUserCorrectDialog(shown = shownUser,
+            onDismissRequest = { shownUser = false },
+            { shownUser = false })
     }
 }
 
@@ -244,6 +248,22 @@ fun MyNoContentDialogReg(
         confirmButton = { onConfirmButton() },
         title = stringResource(R.string.TitleAlertComplete),
         description = stringResource(R.string.ContentAlertComplete),
+        icondialog = Icons.Filled.Error
+    )
+}
+
+@Composable
+fun MyNotUserCorrectDialog(
+    shown: Boolean,
+    onDismissRequest: () -> Unit,
+    onConfirmButton: () -> Unit,
+) {
+    SimpleAlertDialog(
+        shown = shown,
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = { onConfirmButton() },
+        title = stringResource(R.string.TitleAlertComplete),
+        description = stringResource(R.string.errorUsernameCorrect),
         icondialog = Icons.Filled.Error
     )
 }

@@ -14,6 +14,7 @@ sealed class Route(
     object ProfileScreen : Route(route = "profileScreen")
     object NewScreenWithConf : Route(route = "MyConfScreen")
     object ConfScreen : Route(route = "settingsScreen")
+    object MyPageScreen : Route(route = "myPageScreen")
 
 
     object AppStartNavigation : Route(route = "appStartNavigation")

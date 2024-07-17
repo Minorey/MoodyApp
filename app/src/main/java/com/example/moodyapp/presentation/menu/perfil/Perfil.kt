@@ -62,7 +62,7 @@ fun Profile(navigationController: NavController) {
     }
 
     //DAtabase
-    val myRef = Firebase.database.reference.child(Firebase.auth.currentUser?.uid.toString())
+    val myRef = Firebase.database.reference.child("users").child(Firebase.auth.currentUser?.uid.toString())
     myRef.addValueEventListener(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
@@ -80,7 +80,7 @@ fun Profile(navigationController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(40.dp, 40.dp)
+            .padding(30.dp, 40.dp)
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -102,6 +102,7 @@ fun Profile(navigationController: NavController) {
                         modifier = Modifier
                             .width(80.dp)
                             .height(80.dp)
+                            .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
                             .clip(CircleShape)
                             .zIndex(1f),
                         contentScale = ContentScale.FillBounds,
@@ -110,21 +111,20 @@ fun Profile(navigationController: NavController) {
             }
             Column(
                 modifier = Modifier
-                    .padding(20.dp, 0.dp)
+                    .padding(start = 20.dp, end = 10.dp)
+                    .width(160.dp)
                     .height(80.dp),
                 verticalArrangement = Arrangement.Center,
             ) {
-                Row {
                     Text(
                         text = username,
-                        style = MaterialTheme.typography.displayMedium,
+                        style = if(username.length<=10){
+                            MaterialTheme.typography.displayMedium
+                        } else{
+                            MaterialTheme.typography.displaySmall
+                        },
                         fontWeight = FontWeight.Bold,
                     )//Nombre de Usuario
-                }
-//                Row {
-//                    Text(text = correo)//Correo
-//                }
-
             }
             Column(
                 verticalArrangement = Arrangement.Center,

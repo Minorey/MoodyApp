@@ -134,29 +134,33 @@ fun ProfileButton(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.primary,
         ),
         shape = RoundedCornerShape(size = 10.dp),
         modifier = Modifier
-            .padding(20.dp, 20.dp)//Margin
+            .padding(20.dp, 15.dp)//Margin
             .fillMaxWidth()
-            .border(3.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(size = 10.dp))
-            .padding(0.dp, 10.dp)//Padding
+            .height(70.dp)
+            .border(3.dp, MaterialTheme.colorScheme.secondary, RoundedCornerShape(size = 10.dp))
     ) {
         Row(
             horizontalArrangement = Arrangement.Absolute.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(imageVector = icon, contentDescription = "iconMyProfile")
+            Icon(
+                imageVector = icon,
+                contentDescription = "iconMyProfile",
+                tint = MaterialTheme.colorScheme.tertiary
+            )
             Text(
                 text = text,
-                style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-                color = MaterialTheme.colorScheme.primary
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                color = MaterialTheme.colorScheme.tertiary
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Default.ArrowRight,
-                contentDescription = "ArrowRight"
+                contentDescription = "ArrowRight",
+                tint= MaterialTheme.colorScheme.tertiary,
             )
         }
     }

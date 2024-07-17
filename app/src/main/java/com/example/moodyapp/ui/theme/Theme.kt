@@ -13,27 +13,21 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
 
-    background = Black,
-    primary = GreenDark,
-    onPrimary = Green,
-    secondary = White,
-    onSecondary = WhiteSmoke,
-    surface = GreenDark
-
+    background = Negro, //Fondo
+    primary = Verde, //Boton
+    secondary = VerdeClaro, //Menu
+    tertiary = Blanco //Letras
 )
-
-// holiwis x2 x3 Yeicot Was Here  -.- nou
 
 private val LightColorScheme = lightColorScheme(
 
-    background = PanchoLight,
-    primary = GreenDark,
-    onPrimary = Green,
-    secondary = PanchoDark,
-    onSecondary = Pancho20,
-    surface = Black
+    background = Blanco, //Fondo
+    primary = VerdeClaro, //Boton
+    secondary = Verde, //Menu
+    tertiary = Gris  //Letras
+)
 
-    /* Other default colors to override
+/* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -42,7 +36,6 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
-)
 
 @Composable
 fun MoodyAppTheme(

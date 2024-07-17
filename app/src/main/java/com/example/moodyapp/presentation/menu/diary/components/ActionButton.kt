@@ -25,7 +25,7 @@ fun ActionButton(
         enabled = enabled,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colorScheme.background
+            contentColor = MaterialTheme.colorScheme.tertiary
         )
     ){
         Text(text = text)

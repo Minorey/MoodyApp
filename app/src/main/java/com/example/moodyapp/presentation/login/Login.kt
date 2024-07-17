@@ -11,10 +11,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +29,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -88,6 +92,11 @@ fun LoginScreen(navController: NavHostController) {
             mutableStateOf(false)
         }
 
+        val context = LocalContext.current
+
+        (context as? Activity)?.requestedOrientation =
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -124,7 +133,12 @@ fun LoginScreen(navController: NavHostController) {
                         descriptionIcon = "User",
                         label = stringResource(R.string.user)
                     )
-
+                    HorizontalDivider(
+                        modifier = Modifier
+                            .padding(0.dp, 10.dp)
+                            .width(80.dp),
+                        color = Color.Transparent
+                    )
                     PasswordTextField(
                         value = pass,
                         onValueChange = { pass = it },
@@ -139,8 +153,6 @@ fun LoginScreen(navController: NavHostController) {
             Row {
                 Column {
                     val context = LocalContext.current
-                    (context as? Activity)?.requestedOrientation =
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                     LoginButton(
                         text = stringResource(R.string.SignInButtonLabel),
                         onClick = {

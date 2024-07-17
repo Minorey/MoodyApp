@@ -47,4 +47,8 @@
     <string name="emoWorried">Worried</string>
     <string name="emoSad">Sad</string>
     <string name="iFeel">Today I feel...</string>
+    <string name="iNotWrite">I haven\'t written anything yet</string>
+    <string name="isWrote">Looks like you\'ve already written a page for today.</string>
+    <string name="errorUsernameCorrect">The username must be equal to or greater than 3 letters.</string>
+    <string name="SavedPage">The page is saved</string>
 </resources>

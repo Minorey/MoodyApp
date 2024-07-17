@@ -10,13 +10,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.moodyapp.page.MyPage
 import com.example.moodyapp.presentation.confscreen.MySettings
 import com.example.moodyapp.presentation.login.LoginScreen
 import com.example.moodyapp.presentation.menu.BottomNavigationBar
 import com.example.moodyapp.presentation.onboarding.horizontalViewPager
 import com.example.moodyapp.presentation.register.ui.RegisterScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun NavGraph(
     startDestination: String,
@@ -47,17 +48,24 @@ fun NavGraph(
             BackHandler(enabled = true) {
                 // do nothing
             }
-            BottomNavigationBar(navController)
+            BottomNavigationBar(navController,dataStore)
         }
 
         //Navegación a las Configuraciones
         navigation(
             route = Route.NewScreenWithConf.route,
             startDestination = Route.ConfScreen.route
-        ){
+        ) {
             composable(Route.ConfScreen.route) {
                 MySettings()
             }
+        }
+        //Navegación a MyPage
+        composable(
+            route = Route.MyPageScreen.route + "/{mydate}",
+        ) { backStackEntry ->
+            val myactualdate: String = backStackEntry.arguments?.getString("mydate") ?: ""
+            MyPage(mydate = myactualdate)
         }
 
     }

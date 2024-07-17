@@ -2,6 +2,8 @@ package com.example.moodyapp.presentation.menu.diary.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,36 +17,44 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharacterTextField(label: String, text: String,count: String, onValueChange: (String) -> Unit) {
+fun CharacterTextField(
+    label: String,
+    isWrote: Boolean,
+    text: String,
+    count: String,
+    modifier: Modifier = Modifier.fillMaxWidth(),
+    onValueChange: (String) -> Unit
+) {
     TextField(
         value = text,
         onValueChange = onValueChange,
         label = { Text(label, fontSize = 25.sp) },
         singleLine = true,
+        enabled = isWrote,
         supportingText = { Text(text = count) },
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         isError = text.isEmpty(),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
             errorContainerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
-            focusedIndicatorColor = MaterialTheme.colorScheme.onPrimary,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.onPrimary,
-            errorIndicatorColor = MaterialTheme.colorScheme.onPrimary,
-            disabledIndicatorColor = MaterialTheme.colorScheme.onPrimary,
-            unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-            focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-            disabledTextColor = MaterialTheme.colorScheme.onPrimary,
-            errorTextColor = MaterialTheme.colorScheme.onPrimary,
-            focusedSupportingTextColor = MaterialTheme.colorScheme.onPrimary,
-            errorSupportingTextColor = MaterialTheme.colorScheme.onPrimary,
-            disabledSupportingTextColor = MaterialTheme.colorScheme.onPrimary,
-            unfocusedSupportingTextColor = MaterialTheme.colorScheme.onPrimary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-            focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-            disabledLabelColor = MaterialTheme.colorScheme.onPrimary,
-            errorLabelColor = MaterialTheme.colorScheme.onPrimary,
+            focusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+            errorIndicatorColor = MaterialTheme.colorScheme.secondary,
+            disabledIndicatorColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.tertiary,
+            focusedTextColor = MaterialTheme.colorScheme.tertiary,
+            disabledTextColor = MaterialTheme.colorScheme.tertiary,
+            errorTextColor = MaterialTheme.colorScheme.tertiary,
+            focusedSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            errorSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            disabledSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            focusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            disabledLabelColor = MaterialTheme.colorScheme.tertiary,
+            errorLabelColor = MaterialTheme.colorScheme.tertiary,
         ),
     )
 
@@ -54,6 +64,7 @@ fun CharacterTextField(label: String, text: String,count: String, onValueChange:
 fun CharacterContentTextField(
     label: String,
     count: String,
+    isWrote: Boolean,
     text: String,
     onValueChange: (String) -> Unit
 ) {
@@ -62,11 +73,11 @@ fun CharacterContentTextField(
         onValueChange = onValueChange,
         label = { Text(text = label, fontSize = 25.sp) },
         singleLine = false,
+        enabled = isWrote,
         supportingText = { Text(text = count) },
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
-            ,
+            .height(300.dp),
 
         isError = text.isEmpty(),
         colors = TextFieldDefaults.colors(
@@ -74,22 +85,22 @@ fun CharacterContentTextField(
             unfocusedContainerColor = Color.Transparent,
             errorContainerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
-            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
-            errorIndicatorColor = MaterialTheme.colorScheme.primary,
-            disabledIndicatorColor = MaterialTheme.colorScheme.primary,
-            unfocusedTextColor = MaterialTheme.colorScheme.primary,
-            focusedTextColor = MaterialTheme.colorScheme.primary,
-            disabledTextColor = MaterialTheme.colorScheme.primary,
-            errorTextColor = MaterialTheme.colorScheme.primary,
-            focusedSupportingTextColor = MaterialTheme.colorScheme.primary,
-            errorSupportingTextColor = MaterialTheme.colorScheme.primary,
-            disabledSupportingTextColor = MaterialTheme.colorScheme.primary,
-            unfocusedSupportingTextColor = MaterialTheme.colorScheme.primary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-            focusedLabelColor = MaterialTheme.colorScheme.primary,
-            disabledLabelColor = MaterialTheme.colorScheme.primary,
-            errorLabelColor = MaterialTheme.colorScheme.primary,
+            focusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+            errorIndicatorColor = MaterialTheme.colorScheme.secondary,
+            disabledIndicatorColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.tertiary,
+            focusedTextColor = MaterialTheme.colorScheme.tertiary,
+            disabledTextColor = MaterialTheme.colorScheme.tertiary,
+            errorTextColor = MaterialTheme.colorScheme.tertiary,
+            focusedSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            errorSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            disabledSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedSupportingTextColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            focusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            disabledLabelColor = MaterialTheme.colorScheme.tertiary,
+            errorLabelColor = MaterialTheme.colorScheme.tertiary,
         ),
     )
 

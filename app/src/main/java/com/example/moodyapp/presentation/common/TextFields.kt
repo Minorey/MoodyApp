@@ -3,6 +3,7 @@ package com.example.moodyapp.presentation.common
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -25,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,6 +42,7 @@ fun NormalTextField(
     value: String,
     onValueChange: (String) -> Unit,
     leadingIcon: ImageVector,
+    count: String? = null,
     descriptionIcon: String,
     label: String,
 ) {
@@ -49,10 +50,19 @@ fun NormalTextField(
         value = value,
         singleLine = true,
         onValueChange = onValueChange,
+        suffix = {
+            count?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier.width(80.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+        },
         textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Left,
             fontFamily = Quicksand,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.tertiary,
         ),
         label = {
             Text(
@@ -67,14 +77,12 @@ fun NormalTextField(
             )
         },
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            focusedTextColor = MaterialTheme.colorScheme.primary,
-            unfocusedTextColor = MaterialTheme.colorScheme.primary,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedLabelColor = MaterialTheme.colorScheme.primary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            focusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.tertiary,
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary,
         ),
@@ -102,7 +110,7 @@ fun PasswordTextField(
         textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Left,
             fontFamily = Quicksand,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.tertiary,
         ),
         label = {
             Text(
@@ -128,19 +136,20 @@ fun PasswordTextField(
             // Please provide localized description for accessibility services
             val description = if (passwordVisible) "Hide password" else "Show password"
 
-            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+            IconButton(
+                onClick = { passwordVisible = !passwordVisible },
+                modifier = Modifier.padding(end = 10.dp)
+            ) {
                 Icon(imageVector = image, description)
             }
         },
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            focusedTextColor = MaterialTheme.colorScheme.primary,
-            unfocusedTextColor = MaterialTheme.colorScheme.primary,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedLabelColor = MaterialTheme.colorScheme.primary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            focusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.tertiary,
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
@@ -150,6 +159,7 @@ fun PasswordTextField(
         modifier = Modifier
             .width(OutlinedTextFieldDefaults.MinWidth)
             .fillMaxWidth(OutlinedTextFieldDefaults.MinWidth.value / 10)
+
     )
 }
 
@@ -159,25 +169,25 @@ fun SoloLecturaTextField(
     onValueChange: (String) -> Unit,
     leadingIcon: ImageVector,
     descriptionIcon: String,
-    click:()->Unit,
+    click: () -> Unit,
 ) {
     TextField(
         value = value,
         onValueChange = onValueChange,
         readOnly = true,
-        leadingIcon={
+        leadingIcon = {
             Icon(
                 imageVector = leadingIcon,
                 contentDescription = descriptionIcon,
             )
         },
         label = {
-                Text(text = stringResource(id = R.string.birthdateTitle))
+            Text(text = stringResource(id = R.string.birthdateTitle))
         },
         textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Left,
             fontFamily = Quicksand,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.tertiary,
         ),
         interactionSource = remember { MutableInteractionSource() }
             .also { interactionSource ->
@@ -191,14 +201,12 @@ fun SoloLecturaTextField(
                 }
             },
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            focusedTextColor = MaterialTheme.colorScheme.primary,
-            unfocusedTextColor = MaterialTheme.colorScheme.primary,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedLabelColor = MaterialTheme.colorScheme.primary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            focusedLabelColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.tertiary,
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary,
         ),

@@ -27,13 +27,12 @@ fun horizontalViewPager(navController: NavHostController, dataStore: DataStore<P
     val isOnBoardingChecked =
         preferences.getPreferenceFlow(LocalUserMangerImpl.ONBOARDING_CHECKED_KEY, false)
             .collectAsState(initial = false)
+
     if (isOnBoardingChecked.value) {
         navController.navigate(Route.LoginScreen.route)
     } else {
-        val pages = pagesList.size;//Número de páginas
+        val pages = pagesList.size//Número de páginas
         val statePager = rememberPagerState {
-            0//página inicial
-            0f//tamaño diferencial de la página principal
             pages//número de páginas
         }
         Row {
