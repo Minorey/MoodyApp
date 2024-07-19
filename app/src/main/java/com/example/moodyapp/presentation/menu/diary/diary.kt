@@ -90,13 +90,10 @@ fun Diary(dataStore: DataStore<Preferences>) {
     val content=preferences.getPreferenceStringFlow(LocalUserMangerImpl.CONTENT_DIARY_, "")
         .collectAsState(initial = "").value
 
-    LocalView.current.windowInsetsController?.hide(WindowInsetsCompat.Type.systemBars())
-
     // API Key
     APIKeyRow(context, viewmodel, apiKey) {
         apiKey = it
     }
-
 
     Column(
         modifier = Modifier

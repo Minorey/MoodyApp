@@ -1,7 +1,6 @@
 package com.example.moodyapp.presentation.menu.mymemories
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +24,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,8 +42,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.moodyapp.R
+import com.example.moodyapp.page.getImageUrl
 import com.example.moodyapp.presentation.nvgraph.Route
-import java.io.File
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.launch
 
 @Composable
 fun MyMemories(viewModel: PagesViewModel = viewModel(), navController: NavController) {
@@ -66,6 +74,17 @@ fun MyMemories(viewModel: PagesViewModel = viewModel(), navController: NavContro
                             R.drawable.surprise
                         } else R.drawable.happy
 
+                    val imagePath =
+                        "users/${Firebase.auth.uid.toString()}/imagePages/${page.image.toString()}.jpg"
+
+                    val coroutineScope = rememberCoroutineScope()
+                    var imageUrl by remember { mutableStateOf<String?>(null) }
+
+                    LaunchedEffect(imagePath) {
+                        coroutineScope.launch {
+                            imageUrl = getImageUrl(imagePath)
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -86,7 +105,8 @@ fun MyMemories(viewModel: PagesViewModel = viewModel(), navController: NavContro
                         Image(
                             painter = painterResource(id = myemo),
                             contentDescription = "emotion",
-                            modifier = Modifier.size(40.dp)
+                            modifier = Modifier
+                                .size(40.dp)
                                 .clip(shape = RoundedCornerShape(5.dp))
                         )
                         Column(
@@ -110,19 +130,17 @@ fun MyMemories(viewModel: PagesViewModel = viewModel(), navController: NavContro
                                 color = MaterialTheme.colorScheme.tertiary
                             )
                         }
-                        val imgFile =
-                            File("/storage/emulated/0/Pictures/Moody/${page.image.toString()}.jpg")
-                        var imgBitmap: Bitmap? = null
-                        if (imgFile.exists()) {
-                            imgBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+
+                        imageUrl?.let {
+                            Image(
+                                painter = rememberAsyncImagePainter(model = it),
+                                contentDescription = "image",
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(shape = RoundedCornerShape(5.dp))
+                            )
                         }
-                        Image(
-                            painter = rememberAsyncImagePainter(model = imgBitmap),
-                            contentDescription = "image",
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(shape = RoundedCornerShape(5.dp))
-                        )
+
                     }
                 }
             }

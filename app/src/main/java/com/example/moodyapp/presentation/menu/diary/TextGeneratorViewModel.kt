@@ -2,13 +2,13 @@ package com.example.moodyapp.presentation.menu.diary
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
@@ -26,7 +26,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.launch
+import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -178,6 +180,10 @@ class TextGeneratorViewModel : ViewModel() {
 
             val downloader= AndroidDownloader(context)
             downloader.downloadFile(images.first().url,getDate1())
+            val file = Uri.fromFile(File("/storage/emulated/0/Pictures/Moody/${getDate1()}.jpg"))
+            val imgref =
+                Firebase.storage.reference.child("users/${Firebase.auth.uid.toString()}/imagePages/${file.lastPathSegment}")
+            imgref.putFile(file)
 
             guardarDatos(title, content, response, getDate1(), emotion)
 
