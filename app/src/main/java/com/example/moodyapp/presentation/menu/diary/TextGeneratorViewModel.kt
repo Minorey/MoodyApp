@@ -33,7 +33,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TextGeneratorViewModel : ViewModel() {
-    private var openAI = OpenAI(token = Env.OPENAI_API_KEY, logging = LoggingConfig(LogLevel.All))
+    private var openAI = OpenAI(token = Env.CUSTOM_OPENAI_API_KEY, logging = LoggingConfig(LogLevel.All))
 
     var response: String by mutableStateOf("")
     private var imageURI: String by mutableStateOf("")
@@ -44,7 +44,7 @@ class TextGeneratorViewModel : ViewModel() {
     var apiError: Boolean by mutableStateOf(false)
 
     init {
-        apiError = Env.OPENAI_API_KEY.isEmpty()
+        apiError = Env.CUSTOM_OPENAI_API_KEY.isEmpty()
     }
 
     // API

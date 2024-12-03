@@ -14,7 +14,7 @@ fun APIKeyRow(
     apiKey: String,
     onApiKeyChanged: (String) -> Unit
 ) {
-    if (Env.OPENAI_API_KEY.isEmpty()) {
+    if (Env.CUSTOM_OPENAI_API_KEY.isEmpty()) {
         var currentApiKey = apiKey
         if (apiKey.isEmpty()) {
             currentApiKey = viewModel.getCustomAPIKey(context)
